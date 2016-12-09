@@ -1,0 +1,6 @@
+sudo: required
+dist: trusty
+install:
+  - sudo apt-get install quilt qemu-user-static debootstrap kpartx zerofree pxz zip bsdtar libcap2-bin realpath
+script:
+  - sudo ./build.sh
