@@ -4,3 +4,15 @@ install:
   - sudo apt-get install quilt qemu-user-static debootstrap kpartx zerofree pxz zip bsdtar libcap2-bin realpath
 script:
   - sudo ./build.sh
+before_deploy:
+  # Workaround for https://github.com/travis-ci/dpl/issues/542
+  - sudo chown $(id -u) build/deploy/*.zip
+deploy:
+  provider: releases
+  api_key:
+    secure: "KrkO3D25s+JmJOSU0CXY3PuT7Ipg7PzzpD17rUjQ7viKLtaoZZYDnbx1wqjOqD8F6Bppk7HDQdMKrY8hmLNA0fd1i7U4Ly/3XmnC03xnNEIfoVqptXFadDJKuc5Mh1wbUJQPItnmKj5n7/2xF7lSsnlk3Aalj6yG6lbAnEIhYlDQjPczO9hsIMZqJg2YXwzS+Rfis8jK67GyvuGAY32hp9LqTbEdY0HL3ociW9VGBs4Z6LPq5N91Pc8LqC6rtIGDwMHty+6MjEEuykB+x67zvecasTiEJP2DCByIFb0WN/Iudr/g0N2jnqqdnFFAhd3wFRWXj/189JCRSdSi9MKtNqdR907tQSeuqRZANhPqMcltKw5KVlByRqPt85JPDQrm7IoeZewJOnpZBPlNzi+vEr23S5fAk5ZflVqBFW6J3TT0C8lROhpndFsKuISXNeQ6jP/bJa4k36YI393SMGzu27kfSLNl/xpVQc7+M2Tgf+nd+WzJHaOQI65voAcpm51Ley47EQc2WZj0l/ElRNaz8+inqse1QeFmi5+Tk9T9hJJsSwwY7QEllWfO/i+87PuqV2gpWaBWCUeOrUKakm1+icpomuqHVBHbtgbWJ7Ut7ovc0jbGwS/4xwL357RlJ43QDXEmeyf99SlmprSB7CXG7Yg11zxBVd3bGAZsqwvzJXs="
+  file: build/deploy/*.zip
+  file_glob: true
+  skip_cleanup: true
+  on:
+    tags: true
