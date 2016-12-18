@@ -1,10 +1,5 @@
 = BigClown Raspbian
 :gh-name: bigclownlabs/bc-raspbian
-:gh-branch: master
-
-ifdef::env-github[]
-image:https://travis-ci.org/{gh-name}.svg?branch={gh-branch}["Build Status", link="https://travis-ci.org/{gh-name}"]
-endif::env-github[]
 
 This repository contains scripts for building customized Raspbian image for Raspberry Pi.
 
