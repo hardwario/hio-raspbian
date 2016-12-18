@@ -8,3 +8,7 @@ on_chroot <<-EOF
 	apt-get install -y apt-transport-https
 	apt-get update
 EOF
+
+on_chroot <<-EOF
+    systemctl enable ssh
+EOF
