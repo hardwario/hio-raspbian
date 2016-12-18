@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-export IMG_NAME='bc-hub'
+export IMG_NAME='bc-raspbian'
 export DEBIAN_FRONTEND='noninteractive'
 export LC_ALL='C.UTF-8'
 
