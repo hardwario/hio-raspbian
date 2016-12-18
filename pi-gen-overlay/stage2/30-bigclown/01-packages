@@ -1,5 +1,7 @@
 bc-workroom-ledstrip
 bc-workroom-blynk
 git
+htop
+mosquitto-clients
 python3-venv
 python3-pip
