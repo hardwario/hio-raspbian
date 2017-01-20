@@ -10,5 +10,5 @@ on_chroot <<-EOF
 EOF
 
 on_chroot <<-EOF
-    systemctl enable ssh
+	systemctl enable ssh
 EOF
