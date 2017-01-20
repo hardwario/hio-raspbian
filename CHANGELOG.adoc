@@ -1,6 +1,16 @@
 = Change Log
 :gh-url: https://github.com/bigclownlabs/bc-raspbian
 
+
+== link:{gh-url}/tree/v1.1.0[1.1.0] (unreleased)
+
+Changed::
+* Enable shell and kernel messages on serial connection by default.
+
+Fixed::
+* Fix name of the bc-workroom-led-strip package (it has been renamed from “bc-workroom-ledstrip” to “bc-workroom-led-strip”).
+
+
 == link:{gh-url}/tree/v1.0.0[1.0.0] (2016-12-19)
 
 * The first stable release.
