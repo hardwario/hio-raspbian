@@ -7,6 +7,7 @@
 Changed::
 * Enable shell and kernel messages on serial connection by default.
 * Disable `AcceptEnv LANG LC_*` in `sshd_config`.
+* Change timezone from `Etc/UTC` to `Europe/Prague`.
 
 Fixed::
 * Fix name of the bc-workroom-led-strip package (it has been renamed from “bc-workroom-ledstrip” to “bc-workroom-led-strip”).
