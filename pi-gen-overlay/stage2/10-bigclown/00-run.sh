@@ -1,8 +1,11 @@
 #!/bin/bash -e
 
-install -m 644 files/bigclown.list "$ROOTFS_DIR"/etc/apt/sources.list.d/
+install -m 644 files/*.list "$ROOTFS_DIR"/etc/apt/sources.list.d/
 
-on_chroot apt-key add - < files/bigclown.gpg.key
+for file in files/*.gpg.key; do
+	echo "Adding apt key $(basename "$file")" >&2
+	on_chroot apt-key add - < "$file"
+done
 
 on_chroot <<-EOF
 	apt-get install -y apt-transport-https
