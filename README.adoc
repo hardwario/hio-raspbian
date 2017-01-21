@@ -22,7 +22,6 @@ Our image is built with the same scripts as the “official” one, with the fol
 * OpenSSH daemon enabled by default and removed `AcceptEnv LANG LC_*`.
 * Added third-party repositories:
   ** https://deb.nodesource.com/node_6.x
-  ** https://apt.dockerproject.org/repo
   ** https://repo.bigclown.com/debian
 * Installed additional packages:
   ** bc-workroom-blynk
