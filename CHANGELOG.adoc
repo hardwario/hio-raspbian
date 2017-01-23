@@ -9,6 +9,7 @@ Changed::
 * Disable `AcceptEnv LANG LC_*` in `sshd_config`.
 * Change timezone from `Etc/UTC` to `Europe/Prague`.
 * Enable SSH daemon by creating empty file `/boot/ssh` instead of running `systemctl enable ssh` during build as before.
+* Change default systemd target from graphical to multi-user.
 
 Fixed::
 * Fix name of the bc-workroom-led-strip package (it has been renamed from “bc-workroom-ledstrip” to “bc-workroom-led-strip”).

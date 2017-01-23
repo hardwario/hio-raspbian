@@ -16,3 +16,8 @@ EOF
 on_chroot <<-EOF
 	raspi-config nonint do_serial 0
 EOF
+
+# Change default target from Graphical Interface to Multi-User System.
+on_chroot <<-EOF
+	systemctl set-default multi-user.target
+EOF
