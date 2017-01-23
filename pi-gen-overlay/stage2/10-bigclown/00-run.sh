@@ -12,10 +12,6 @@ on_chroot <<-EOF
 	apt-get update
 EOF
 
-on_chroot <<-EOF
-	systemctl enable ssh
-EOF
-
 # Enable shell and kernel messages on the serial connection.
 on_chroot <<-EOF
 	raspi-config nonint do_serial 0
