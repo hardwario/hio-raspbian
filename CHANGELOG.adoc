@@ -12,7 +12,6 @@ Changed::
 
 Fixed::
 * Fix name of the bc-workroom-led-strip package (it has been renamed from “bc-workroom-ledstrip” to “bc-workroom-led-strip”).
-* Remove SSH host keys from the generated image (it was an unintended side-effect of enabling SSH daemon).
 
 
 == link:{gh-url}/tree/v1.0.0[1.0.0] (2016-12-19)
