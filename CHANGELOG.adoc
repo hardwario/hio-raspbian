@@ -2,7 +2,7 @@
 :gh-url: https://github.com/bigclownlabs/bc-raspbian
 
 
-== link:{gh-url}/tree/v1.1.0[1.1.0] (unreleased)
+== link:{gh-url}/tree/v1.1.0[1.1.0] (2017-01-24)
 
 Changed::
 * Enable shell and kernel messages on serial connection by default.
@@ -10,6 +10,7 @@ Changed::
 * Change timezone from `Etc/UTC` to `Europe/Prague`.
 * Enable SSH daemon by creating empty file `/boot/ssh` instead of running `systemctl enable ssh` during build as before.
 * Change default systemd target from graphical to multi-user.
+* Remove Docker apt repository.
 
 Fixed::
 * Fix name of the bc-workroom-led-strip package (it has been renamed from “bc-workroom-ledstrip” to “bc-workroom-led-strip”).
