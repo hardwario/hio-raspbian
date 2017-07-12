@@ -1,6 +1,10 @@
 = Change Log
 :gh-url: https://github.com/bigclownlabs/bc-raspbian
 
+== link:{gh-url}/tree/v1.2.0[1.2.0] (2017-07-12)
+Changed::
+* Add package bc-gateway
+* Remove all package for bc-workroom
 
 == link:{gh-url}/tree/v1.1.0[1.1.0] (2017-01-24)
 
