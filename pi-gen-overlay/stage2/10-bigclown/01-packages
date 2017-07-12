@@ -1,8 +1,9 @@
-bc-workroom-led-strip
-bc-workroom-blynk
 git
 htop
+mc
+mosquitto
 mosquitto-clients
-nodejs
 python3-venv
 python3-pip
+bc-gateway
+nodejs
