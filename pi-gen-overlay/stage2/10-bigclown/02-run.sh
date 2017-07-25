@@ -5,8 +5,6 @@ install -m 644 files/nodered.service "$ROOTFS_DIR"/etc/systemd/system/
 cp -r files/install "$ROOTFS_DIR"/home/pi
 chown -R 1000:1000 "$ROOTFS_DIR"/home/pi/install
 
-install -m 644 nodered.service "$ROOTFS_DIR"/etc/systemd/system/
-
 on_chroot << EOF
 npm i -g --unsafe-perm --no-progress node-red
 npm i -g --unsafe-perm --no-progress node-red-contrib-blynk-websockets
