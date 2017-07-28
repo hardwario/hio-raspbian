@@ -23,11 +23,10 @@ Our image is built with the same scripts as the “official” one, with the fol
 * Added third-party repositories:
   ** https://deb.nodesource.com/node_6.x
   ** https://repo.bigclown.com/debian
+
 * Installed additional packages:
-  ** bc-workroom-blynk
   ** bc-workroom-common
-  ** bc-workroom-gateway
-  ** bc-workroom-led-strip
+  ** bc-gateway
   ** git
   ** htop
   ** mosquitto
@@ -35,3 +34,6 @@ Our image is built with the same scripts as the “official” one, with the fol
   ** nodejs
   ** python3-pip
   ** python3-venv
+
+* Installed additional:
+  ** Node Red
