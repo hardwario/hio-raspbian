@@ -1,6 +1,10 @@
 = Change Log
 :gh-url: https://github.com/bigclownlabs/bc-raspbian
 
+== link:{gh-url}/tree/v1.4.0[1.4.0] (2017-08-10)
+Changed::
+* Add mosquitto repository
+
 == link:{gh-url}/tree/v1.3.0[1.3.0] (2017-07-25)
 Changed::
 * Add Node-RED
