@@ -1,15 +1,16 @@
-= BigClown Raspbian
-:gh-name: bigclownlabs/bc-raspbian
+<a href="https://www.bigclown.com/"><img src="https://bigclown.sirv.com/logo.png" width="200" height="59" alt="BigClown Logo" align="right"></a>
+
+# BigClown Raspbian
 
 This repository contains scripts for building customized Raspbian image for Raspberry Pi.
 
-Prebuilt images for your Raspberry Pi are available in https://github.com/{gh-name}/releases[Releases] – just pick a ZIP file from the Latest release.
-Installation procedure is the same as for original Raspbian image which is described https://www.raspberrypi.org/documentation/installation/installing-images/[here].
+Prebuilt images for your Raspberry Pi are available in [Releases](https://github.com/bigclownlabs/bc-raspbian/releases) – just pick a ZIP file from the Latest release.
 
-Images are automatically built on https://travis-ci.org/{gh-name}[Travis CI].
+Installation procedure is the same as for original Raspbian image which is described [here](https://www.raspberrypi.org/documentation/installation/installing-images/).
 
+Images are automatically built on [Travis CI](https://travis-ci.org/bigclownlabs/bc-raspbian).
 
-== Modifications in this image
+## Modifications in this image
 
 Our image is built with the same scripts as the “official” one, with the following modifications:
 
@@ -21,24 +22,28 @@ Our image is built with the same scripts as the “official” one, with the fol
 * Country in `wpa_supplicant.conf` changed from `GB` to `CZ`.
 * OpenSSH daemon enabled by default and removed `AcceptEnv LANG LC_*`.
 * Added third-party repositories:
-  ** https://deb.nodesource.com/node_6.x
-  ** https://repo.bigclown.com/debian
-  ** http://repo.mosquitto.org/debian
+    * https://deb.nodesource.com/node_6.x
+    * https://repo.bigclown.com/debian
+    * http://repo.mosquitto.org/debian
 
 * Installed additional packages:
-  ** bc-workroom-common
-  ** bc-gateway
-  ** git
-  ** htop
-  ** mosquitto
-  ** mosquitto-clients
-  ** nodejs
-  ** python3-pip
-  ** python3-venv
+    * bc-workroom-common
+    * bc-gateway
+    * git
+    * htop
+    * mosquitto
+    * mosquitto-clients
+    * nodejs
+    * python3-pip
+    * python3-venv
 
 * Installed via npm:
-  ** node-red
-  ** node-red-contrib-blynk-websockets
-  ** node-red-node-twitter
-  ** node-red-dashboard
-  ** node-red-contrib-counter
+    * node-red
+    * node-red-contrib-blynk-websockets
+    * node-red-node-twitter
+    * node-red-dashboard
+    * node-red-contrib-counter
+
+---
+
+Made with &#x2764;&nbsp; by [**HARDWARIO s.r.o.**](https://www.hardwario.com/) in the heart of Europe.
