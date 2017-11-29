@@ -1,13 +1,13 @@
 #!/bin/bash -e
 
-install -m 644 files/nodered.service "$ROOTFS_DIR"/etc/systemd/system/
-
 on_chroot << EOF
-npm i -g --unsafe-perm --no-progress node-red
-npm i -g --unsafe-perm --no-progress node-red-contrib-blynk-websockets
-npm i -g --unsafe-perm --no-progress node-red-node-twitter
-npm i -g --unsafe-perm --no-progress node-red-dashboard
-npm i -g --unsafe-perm --no-progress node-red-contrib-counter
+npm install -g --unsafe-perm --no-progress pm2
 
-systemctl enable nodered.service
+npm install -g --unsafe-perm --no-progres node-red
+npm install -g --unsafe-perm --no-progress node-red-dashboard
+
+pip3 install --upgrade --no-cache-dir pip
+pip3 install --upgrade --no-cache-dir bcf
+pip3 install --upgrade --no-cache-dir bcg
+
 EOF
