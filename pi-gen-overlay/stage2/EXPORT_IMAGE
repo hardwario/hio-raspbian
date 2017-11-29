@@ -1,1 +1,2 @@
--armhf-rpi
+IMG_SUFFIX="-armhf-rpi"
+
