@@ -7,9 +7,15 @@ for file in files/*.gpg.key; do
 	on_chroot apt-key add - < "$file"
 done
 
+install -m 444 files/libssl1.0.0_1.0.1t-1+deb8u7_armhf.deb "$ROOTFS_DIR/tmp"
+install -m 444 files/libwebsockets3_1.2.2-1_armhf.deb "$ROOTFS_DIR/tmp"
+
 on_chroot <<-EOF
 	apt-get install -y apt-transport-https
 	apt-get update
+
+	sudo dpkg -i /tmp/libssl1.0.0_1.0.1t-1+deb8u7_armhf.deb
+	sudo dpkg -i /tmp/libwebsockets3_1.2.2-1_armhf.deb
 EOF
 
 # Enable shell and kernel messages on the serial connection.
