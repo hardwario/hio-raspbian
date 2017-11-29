@@ -16,7 +16,7 @@ cd build
 
 # Assembly our customized pi-gen.
 cp -rf ../pi-gen/* ../pi-gen-overlay/* .
-rm -rf stage2/EXPORT_NOOBS stage3 stage4
+rm -rf stage2/EXPORT_NOOBS stage3 stage4 stage5
 
 for file in ../pi-gen-overlay/*.patch; do
 	echo "Applying patch ${file%/*}"
