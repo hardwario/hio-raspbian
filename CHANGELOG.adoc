@@ -1,6 +1,18 @@
 = Change Log
 :gh-url: https://github.com/bigclownlabs/bc-raspbian
 
+== link:{gh-url}/tree/v1.5.0[1.5.0] ()
+Changed::
+* Add PM2 process manager
+* Add bcg
+* Add bcf
+* Add dfu-util
+* Add tmux
+* Change mosquitto repository from jessie to stretch
+* Remove plugins from Node-RED
+* Remove Bigclown repository
+* Fix mosquitto install. We will remove this fix in the future.
+
 == link:{gh-url}/tree/v1.4.0[1.4.0] (2017-08-10)
 Changed::
 * Add mosquitto repository

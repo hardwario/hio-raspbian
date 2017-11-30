@@ -1,0 +1,6 @@
+device: /dev/bcUD0
+name: "usb-dongle"
+mqtt:
+  host: localhost
+  port: 1883
+

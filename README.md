@@ -2,6 +2,11 @@
 
 # BigClown Raspbian
 
+[![Travis](https://img.shields.io/travis/bigclownlabs/bc-raspbian/master.svg)](https://travis-ci.org/bigclownlabs/bc-raspbian)
+[![Release](https://img.shields.io/github/release/bigclownlabs/bc-raspbian.svg)](https://github.com/bigclownlabs/bc-raspbian/releases)
+[![License](https://img.shields.io/github/license/bigclownlabs/bc-raspbian.svg)](https://github.com/bigclownlabs/bc-raspbian/blob/master/LICENSE)
+[![Twitter](https://img.shields.io/twitter/follow/BigClownLabs.svg?style=social&label=Follow)](https://twitter.com/BigClownLabs)
+
 This repository contains scripts for building customized Raspbian image for Raspberry Pi.
 
 Prebuilt images for your Raspberry Pi are available in [Releases](https://github.com/bigclownlabs/bc-raspbian/releases) – just pick a ZIP file from the Latest release.
@@ -23,26 +28,33 @@ Our image is built with the same scripts as the “official” one, with the fol
 * OpenSSH daemon enabled by default and removed `AcceptEnv LANG LC_*`.
 * Added third-party repositories:
     * https://deb.nodesource.com/node_6.x
-    * https://repo.bigclown.com/debian
     * http://repo.mosquitto.org/debian
+* Similar installations, as described in the [documentation](https://doc.bigclown.com/tutorials/playground-setup/#playground-setup-on-ubuntu)
 
 * Installed additional packages:
-    * bc-workroom-common
-    * bc-gateway
-    * git
-    * htop
-    * mosquitto
-    * mosquitto-clients
-    * nodejs
-    * python3-pip
-    * python3-venv
+	* mosquitto
+	* mosquitto-clients
+	* nodejs
+	* python3-pip
+	* python3-venv
+	* dfu-util
+	* git
+	* htop
+	* mc
+	* tmux
+
+* Installed additional packages for mosquitto, fix issue [https://github.com/eclipse/mosquitto/issues/529](https://github.com/eclipse/mosquitto/issues/529)
+	* libssl1.0.0 from http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u7
+	* libwebsockets3_1.2 from http://ftp.nz.debian.org/debian/pool/main/libw/libwebsockets/libwebsockets3_1.2.2-1_armhf.deb
 
 * Installed via npm:
+	* pm2
     * node-red
-    * node-red-contrib-blynk-websockets
-    * node-red-node-twitter
     * node-red-dashboard
-    * node-red-contrib-counter
+
+* Installed via pip3:
+	* bcg
+	* bcf
 
 ---
 

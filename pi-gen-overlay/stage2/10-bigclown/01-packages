@@ -1,9 +1,10 @@
+mosquitto
+mosquitto-clients
+nodejs
+python3-pip
+python3-venv
 git
 htop
 mc
-mosquitto
-mosquitto-clients
-python3-venv
-python3-pip
-bc-gateway
-nodejs
+tmux
+dfu-util
