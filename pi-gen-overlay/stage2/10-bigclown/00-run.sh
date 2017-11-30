@@ -9,6 +9,9 @@ done
 
 install -m 644 files/*.rules "$ROOTFS_DIR"/etc/udev/rules.d/
 
+install -v -d "${ROOTFS_DIR}/etc/bigclown"
+install -m 644 files/*.yml "$ROOTFS_DIR"/etc/bigclown/
+
 install -m 444 files/libssl1.0.0_1.0.1t-1+deb8u7_armhf.deb "$ROOTFS_DIR/tmp"
 install -m 444 files/libwebsockets3_1.2.2-1_armhf.deb "$ROOTFS_DIR/tmp"
 
