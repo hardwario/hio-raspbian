@@ -2,6 +2,11 @@
 
 # BigClown Raspbian
 
+[![Travis](https://img.shields.io/travis/bigclownlabs/bc-raspbian/master.svg)](https://travis-ci.org/bigclownlabs/bc-raspbian)
+[![Release](https://img.shields.io/github/release/bigclownlabs/bc-raspbian.svg)](https://github.com/bigclownlabs/bc-raspbian/releases)
+[![License](https://img.shields.io/github/license/bigclownlabs/bc-raspbian.svg)](https://github.com/bigclownlabs/bc-raspbian/blob/master/LICENSE)
+[![Twitter](https://img.shields.io/twitter/follow/BigClownLabs.svg?style=social&label=Follow)](https://twitter.com/BigClownLabs)
+
 This repository contains scripts for building customized Raspbian image for Raspberry Pi.
 
 Prebuilt images for your Raspberry Pi are available in [Releases](https://github.com/bigclownlabs/bc-raspbian/releases) – just pick a ZIP file from the Latest release.
@@ -23,7 +28,6 @@ Our image is built with the same scripts as the “official” one, with the fol
 * OpenSSH daemon enabled by default and removed `AcceptEnv LANG LC_*`.
 * Added third-party repositories:
     * https://deb.nodesource.com/node_6.x
-    * https://repo.bigclown.com/debian
     * http://repo.mosquitto.org/debian
 * Similar installations, as described in the [documentation](https://doc.bigclown.com/tutorials/playground-setup/#playground-setup-on-ubuntu)
 
@@ -33,6 +37,7 @@ Our image is built with the same scripts as the “official” one, with the fol
 	* nodejs
 	* python3-pip
 	* python3-venv
+	* dfu-util
 	* git
 	* htop
 	* mc
