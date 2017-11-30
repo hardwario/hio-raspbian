@@ -43,3 +43,4 @@ on_chroot << EOF
 pip3 install --upgrade --no-cache-dir bcg
 EOF
 
+install -m 644 files/bash_completion.d/* "$ROOTFS_DIR"/etc/bash_completion.d/
