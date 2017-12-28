@@ -22,11 +22,14 @@ EOF
 # Install Node-RED
 on_chroot << EOF
 npm install -g --unsafe-perm --no-progres node-red
-npm install -g --unsafe-perm --no-progress node-red-dashboard
 EOF
 
 install -v -o 1000 -g 1000 -d "${ROOTFS_DIR}/home/pi/.node-red"
 install -v -o 1000 -g 1000 files/flows_hub.json "$ROOTFS_DIR/home/pi/.node-red/flows_hub.json"
+
+on_chroot << EOF
+npm install -g --unsafe-perm node-red-dashboard
+EOF
 
 # Update pip3
 on_chroot << EOF
