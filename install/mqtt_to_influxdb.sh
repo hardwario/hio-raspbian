@@ -19,7 +19,7 @@ sudo chmod +x /usr/bin/bc-mqtt-to-influxdb
 step 'Add service'
 sudo wget "https://raw.githubusercontent.com/blavka/bcp-monitor-in-docker/master/bc-mqtt-to-influxdb.service" -O /etc/systemd/system/bc-mqtt-to-influxdb.service
 
-step 'Eneble service'
+step 'Enable service'
 sudo systemctl daemon-reload
 sudo systemctl enable bc-mqtt-to-influxdb.service
 
