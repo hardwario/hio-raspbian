@@ -27,7 +27,7 @@ Our image is built with the same scripts as the “official” one, with the fol
 * Country in `wpa_supplicant.conf` changed from `GB` to `CZ`.
 * OpenSSH daemon enabled by default and removed `AcceptEnv LANG LC_*`.
 * Added third-party repositories:
-    * https://deb.nodesource.com/node_6.x
+    * https://deb.nodesource.com/node_8.x
     * http://repo.mosquitto.org/debian
 * Similar installations, as described in the [documentation](https://doc.bigclown.com/tutorials/playground-setup/#playground-setup-on-ubuntu)
 
