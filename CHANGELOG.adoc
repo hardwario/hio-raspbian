@@ -1,13 +1,17 @@
 = Change Log
 :gh-url: https://github.com/bigclownlabs/bc-raspbian
 
-== link:{gh-url}/tree/v1.5.0[1.5.0] ()
+== link:{gh-url}/tree/v1.5.1[1.5.1] (2018-01-08)
+ * Update mosquitto gpg key
+
+== link:{gh-url}/tree/v1.5.0[1.5.0] (2017-12-31)
 Changed::
 * Add PM2 process manager
 * Add bcg
 * Add bcf
 * Add dfu-util
 * Add tmux
+* Change version of nodejs to 8.x
 * Change mosquitto repository from jessie to stretch
 * Remove plugins from Node-RED
 * Remove Bigclown repository
