@@ -1,6 +1,9 @@
 = Change Log
 :gh-url: https://github.com/bigclownlabs/bc-raspbian
 
+== link:{gh-url}/tree/v1.5.2[1.5.2] (2018-01-09)
+ * Remove node-red-dashboard
+
 == link:{gh-url}/tree/v1.5.1[1.5.1] (2018-01-08)
  * Update mosquitto gpg key
 

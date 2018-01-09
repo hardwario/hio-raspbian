@@ -50,7 +50,6 @@ Our image is built with the same scripts as the “official” one, with the fol
 * Installed via npm:
 	* pm2
     * node-red
-    * node-red-dashboard
 
 * Installed via pip3:
 	* bcg
