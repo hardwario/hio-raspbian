@@ -44,7 +44,7 @@ Our image is built with the same scripts as the “official” one, with the fol
 	* tmux
 
 * Installed additional packages for mosquitto, fix issue [https://github.com/eclipse/mosquitto/issues/529](https://github.com/eclipse/mosquitto/issues/529)
-	* libssl1.0.0 from http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u7
+	* libssl1.0.0 from http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u7_armhf.deb
 	* libwebsockets3_1.2 from http://ftp.nz.debian.org/debian/pool/main/libw/libwebsockets/libwebsockets3_1.2.2-1_armhf.deb
 
 * Installed via npm:
