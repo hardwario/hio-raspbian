@@ -6,4 +6,5 @@
 on_chroot <<-EOF
 	echo 'Europe/Prague' > /etc/timezone
 	dpkg-reconfigure -f noninteractive tzdata
+	apt update
 EOF
