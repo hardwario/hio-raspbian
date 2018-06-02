@@ -28,9 +28,7 @@ EOF
 on_chroot << EOF
 npm install -g --unsafe-perm --no-progres node-red
 
-cd /usr/lib/
-
-npm install -g --unsafe-perm node-red-dashboard
+npm install -g --unsafe-perm --ignore-scripts node-red-dashboard
 EOF
 
 install -v -o 1000 -g 1000 -d "${ROOTFS_DIR}/home/pi/.node-red"
