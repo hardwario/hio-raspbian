@@ -1,6 +1,12 @@
 = Change Log
 :gh-url: https://github.com/bigclownlabs/bc-raspbian
 
+** link:{gh-url}/tree/v1.6.0[1.6.0] (*)
+Changed::
+* Add bcg
+* Add node-red-dashboard
+* Update pi-gen (2018-03-13-raspbian-stretch)
+
 == link:{gh-url}/tree/v1.5.2[1.5.2] (2018-01-09)
  * Remove node-red-dashboard
 
