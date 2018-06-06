@@ -56,3 +56,4 @@ pip3 install --upgrade bch
 EOF
 
 install -m 644 files/bash_completion.d/* "$ROOTFS_DIR"/etc/bash_completion.d/
+install -m 755 files/update-motd.d/* "$ROOTFS_DIR"/etc/update-motd.d/
