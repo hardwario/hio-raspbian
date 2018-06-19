@@ -1,7 +1,11 @@
 = Change Log
 :gh-url: https://github.com/bigclownlabs/bc-raspbian
 
-** link:{gh-url}/tree/v1.6.0[1.6.0] (*)
+** link:{gh-url}/tree/v1.7.0[1.7.0] (2018-06-19)
+Changed::
+* Add bigclown motd
+
+** link:{gh-url}/tree/v1.6.0[1.6.0] (2018-06-03)
 Changed::
 * Add bcg
 * Add node-red-dashboard
