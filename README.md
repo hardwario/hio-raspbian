@@ -24,12 +24,17 @@ Our image is built with the same scripts as the “official” one, with the fol
 * Locale changed from `en_GB.UTF-8` to `en_US.UTF-8`.
 * Keymap changed from `English (UK)` to `English (US) - English (US, international with dead keys)`.
 * Timezone changed from `Etc/UTC` to `Europe/Prague`.
-* Country in `wpa_supplicant.conf` changed from `GB` to `CZ`.
 * OpenSSH daemon enabled by default and removed `AcceptEnv LANG LC_*`.
 * Added third-party repositories:
     * https://deb.nodesource.com/node_8.x
     * http://repo.mosquitto.org/debian
 * Similar installations, as described in the [documentation](https://doc.bigclown.com/tutorials/playground-setup/#playground-setup-on-ubuntu)
+* Ports and services:
+    * 80: port forwarding to 8080
+    * 1880: Node-RED
+	* 1883: Mosquitto mqtt
+	* 8080: http-server (static contet from /var/www)
+	* 9001: Mosquitto websocket
 
 * Installed additional packages:
 	* mosquitto
@@ -43,14 +48,12 @@ Our image is built with the same scripts as the “official” one, with the fol
 	* mc
 	* tmux
 
-* Installed additional packages for mosquitto, fix issue [https://github.com/eclipse/mosquitto/issues/529](https://github.com/eclipse/mosquitto/issues/529)
-	* libssl1.0.0 from http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u7_armhf.deb
-	* libwebsockets3_1.2 from http://ftp.nz.debian.org/debian/pool/main/libw/libwebsockets/libwebsockets3_1.2.2-1_armhf.deb
-
 * Installed via npm:
 	* pm2
     * node-red
 	* node-red-dashboard
+	* node-red-contrib-ifttt
+	* http-server
 
 * Installed via pip3:
 	* bcg
