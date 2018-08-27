@@ -1,6 +1,17 @@
 = Change Log
 :gh-url: https://github.com/bigclownlabs/bc-raspbian
 
+== link:{gh-url}/tree/v1.8.0[1.8.0] (?)
+Changed::
+* Add port forwarding from 80 to 8080
+* Add npm http-server
+* Add npm node-red-contrib-ifttt
+* Add http-server to PM2
+* Enable Mosquitto websocket on port 9001
+* Update pi-gen to 2018-06-27-raspbian-stretch
+* Update Node-RED flow
+* Remove fix fox mosquitto
+
 ** link:{gh-url}/tree/v1.7.0[1.7.0] (2018-06-19)
 Changed::
 * Add bigclown motd
