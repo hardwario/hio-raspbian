@@ -31,7 +31,11 @@ npm install -g --unsafe-perm node-red
 npm install -g --unsafe-perm --ignore-scripts node-red-dashboard
 
 npm install -g --unsafe-perm node-red-contrib-ifttt
+EOF
 
+# Install http-server
+on_chroot << EOF
+npm install -g --unsafe-perm http-server
 EOF
 
 install -v -o 1000 -g 1000 -d "${ROOTFS_DIR}/home/pi/.node-red"
