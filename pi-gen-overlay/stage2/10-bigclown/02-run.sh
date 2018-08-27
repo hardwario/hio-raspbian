@@ -24,11 +24,14 @@ systemctl daemon-reload
 systemctl enable pm2-pi.service
 EOF
 
-# Install Node-RED
+# Install Node-RED and plugins
 on_chroot << EOF
-npm install -g --unsafe-perm --no-progres node-red
+npm install -g --unsafe-perm node-red
 
 npm install -g --unsafe-perm --ignore-scripts node-red-dashboard
+
+npm install -g --unsafe-perm node-red-contrib-ifttt
+
 EOF
 
 install -v -o 1000 -g 1000 -d "${ROOTFS_DIR}/home/pi/.node-red"
