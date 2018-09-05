@@ -43,6 +43,9 @@ npm install -g --unsafe-perm http-server
 EOF
 
 install -v -o 1000 -g 1000 -d "${ROOTFS_DIR}/var/www"
+install -o 1000 -g 1000 -D files/www/*.* "$ROOTFS_DIR/var/www"
+install -v -o 1000 -g 1000 -d "${ROOTFS_DIR}/var/www/fonts"
+install -o 1000 -g 1000 -D files/www/fonts/*.* "$ROOTFS_DIR/var/www/fonts"
 
 install -v -o 1000 -g 1000 -d "${ROOTFS_DIR}/home/pi/.node-red"
 install -v -o 1000 -g 1000 files/flows_hub.json "$ROOTFS_DIR/home/pi/.node-red/flows_hub.json"
