@@ -31,6 +31,10 @@ npm install -g --unsafe-perm node-red
 npm install -g --unsafe-perm --ignore-scripts node-red-dashboard
 
 npm install -g --unsafe-perm node-red-contrib-ifttt
+
+npm install -g --unsafe-perm node-red-contrib-blynk-ws
+
+npm install -g --unsafe-perm ubidots-nodered
 EOF
 
 # Install http-server

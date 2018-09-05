@@ -6,6 +6,8 @@ Changed::
 * Add port forwarding from 80 to 8080
 * Add npm http-server
 * Add npm node-red-contrib-ifttt
+* Add npm node-red-contrib-blynk-ws
+* Add npm ubidots-nodered (Node Red plugin)
 * Add http-server to PM2
 * Enable Mosquitto websocket on port 9001
 * Update pi-gen to 2018-06-27-raspbian-stretch

@@ -53,6 +53,8 @@ Our image is built with the same scripts as the “official” one, with the fol
     * node-red
 	* node-red-dashboard
 	* node-red-contrib-ifttt
+	* node-red-contrib-blynk-ws
+	* ubidots-nodered (Node Red plugin)
 	* http-server
 
 * Installed via pip3:
