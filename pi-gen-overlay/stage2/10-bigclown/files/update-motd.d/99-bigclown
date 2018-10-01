@@ -16,7 +16,7 @@ URL_NODE_RED+=" http://$IP_WIFI:1880/"
 fi
 
 cat << EOF
-================================================================================
+===========================================================================
   ____  _        _____ _                     
  |  _ \(_)      / ____| |                    
  | |_) |_  __ _| |    | | _____      ___ __  
@@ -36,20 +36,20 @@ https://forum.bigclown.com/
 Note: Use Node-RED to create your automation flows at $URL_NODE_RED 
 
 PM2 Process Manager
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     pm2 list                            list running services
     pm2 stop bcg-ud                     stop USB Dongle MQTT gateway
     pm2 start bcg-ud                    start USB Dongle MQTT gateway
 
 BigClown Firmware Tool (for Core Module and USB Dongle flashing)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     bcf update                          update firmware list from GitHub
     bcf list                            list available firmware packages
     bcf flash                           flash firmware (--dfu for DFU mode)
     bcf help
 
 BigClown Hub Control Tool (for USB Dongle and BigClown node management)
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     bch pairing --start                 start pairing mode
     bch pairing --stop                  stop pairing mode
     bch node list                       list paired nodes
