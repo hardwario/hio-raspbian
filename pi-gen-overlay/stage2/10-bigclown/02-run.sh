@@ -78,3 +78,4 @@ EOF
 install -m 644 files/bash_completion.d/* "$ROOTFS_DIR"/etc/bash_completion.d/
 install -m 755 files/update-motd.d/* "$ROOTFS_DIR"/etc/update-motd.d/
 install -m 755 files/websocket.conf "$ROOTFS_DIR"/etc/mosquitto/conf.d/websocket.conf
+install -m 755 files/mqtt.conf "$ROOTFS_DIR"/etc/mosquitto/conf.d/mqtt.conf
