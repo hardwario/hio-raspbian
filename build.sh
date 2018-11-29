@@ -34,7 +34,7 @@ step_download () {
 
 step_unzip() {
 	einfo "Uzip ${IMAGE}.zip"
-	unzip "${IMAGE}.zip"
+	unzip -o "${IMAGE}.zip"
 }
 
 step_prepare_chroot() {
