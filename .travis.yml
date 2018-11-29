@@ -3,23 +3,10 @@ dist: trusty
 addons:
   apt:
     packages:
-    - quilt
-    - parted
+    - kpartx
     - realpath
     - qemu-user-static
-    - zerofree
-    - pxz
     - zip
-    - dosfstools
-    - bsdtar
-    - libcap2-bin
-    - grep
-    - rsync
-    - xz-utils
-install:
-  # Workaround for https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=857338
-  - wget "http://archive.ubuntu.com/ubuntu/pool/main/d/debootstrap/debootstrap_1.0.78+nmu1ubuntu1_all.deb"
-  - sudo dpkg --install debootstrap_1.0.78+nmu1ubuntu1_all.deb
 script:
   - sudo ./build.sh
 before_deploy:
