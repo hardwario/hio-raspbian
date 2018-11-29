@@ -1,6 +1,0 @@
-device: /dev/bcCM0
-name: "core-module"
-mqtt:
-  host: localhost
-  port: 1883
-
