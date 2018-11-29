@@ -1,6 +1,5 @@
 #!/bin/bash
 # vim: set ts=4:
-set -eu
 
 step_cnt=0
 step() {
@@ -10,6 +9,8 @@ step() {
 
 export LC_ALL='C.UTF-8'
 export DEBIAN_FRONTEND='noninteractive'
+
+set -eux
 
 step "Upgrade all packages:"
 sudo apt update && sudo apt upgrade -y
