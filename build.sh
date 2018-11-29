@@ -29,7 +29,6 @@ step_test() {
 
 step_download () {
 	wget "https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2018-11-15/2018-11-13-raspbian-stretch-lite.zip" -O "${IMAGE}.zip"
-	unzip "${IMAGE}.zip"
 }
 
 step_unzip() {
@@ -72,7 +71,7 @@ step_chroot() {
 
 	cp -r www/* "${ROOT_DIR}/var/www/html/"
 
-	HOME=/home/pi chroot --userspec=1000:1000 ${ROOT_DIR} /bin/bash
+	# HOME=/home/pi chroot --userspec=1000:1000 ${ROOT_DIR} /bin/bash
 
 	echo "pm2 kill" | HOME=/home/pi chroot --userspec=1000:1000 ${ROOT_DIR} /bin/bash
 }
