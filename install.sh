@@ -62,6 +62,7 @@ step "Update pip (Python Package Manager) to the latest version:"
 sudo pip3 install --upgrade pip
 
 step "Install the BigClown Tools:"
+sudo apt install -y dfu-util
 sudo pip3 install --upgrade bcf bch bcg
 
 step "Run service for Gateway Radio Dongle:"
@@ -75,3 +76,6 @@ echo 'SUBSYSTEMS=="usb", ACTION=="add", KERNEL=="ttyACM*", ATTRS{idVendor}=="048
 
 step "Http server"
 sudo apt install -y nginx
+
+step "Install Important tools"
+sudo apt install -y git mc htop tmux
