@@ -4,7 +4,7 @@ addons:
   apt:
     packages:
     - kpartx
-    - realpath
+    - coreutils
     - qemu-user-static
     - zip
 script:
