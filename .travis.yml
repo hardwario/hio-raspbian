@@ -1,5 +1,5 @@
 sudo: required
-dist: xenial
+dist: bionic
 addons:
   apt:
     packages:
@@ -7,6 +7,9 @@ addons:
     - coreutils
     - qemu-user-static
     - zip
+    - unzip
+    - binfmt-support
+    - openssl
 script:
   - sudo ./build.sh
 before_deploy:

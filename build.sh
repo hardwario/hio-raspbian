@@ -1,6 +1,6 @@
 #!/bin/bash
 # vim: set ts=4:
-# set -eu
+set -eu
 
 URL="https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-09-30/2019-09-26-raspbian-buster-lite.zip"
 SHA256="a50237c2f718bd8d806b96df5b9d2174ce8b789eda1f03434ed2213bbca6c6ff"
@@ -21,7 +21,8 @@ einfo() {
 }
 
 chroot_bash() {
-	HOME=/home/pi LC_ALL='C.UTF-8' chroot --userspec=1000:1000 ${ROOT_DIR} /bin/bash
+	# HOME=/home/pi LC_ALL='C.UTF-8' chroot --userspec=1000:1000 ${ROOT_DIR} /bin/bash
+	HOME=/home/pi LC_ALL='C.UTF-8' setarch linux32 chroot --userspec=1000:1000 ${ROOT_DIR} /bin/bash
 }
 
 chroot_cmd() {
@@ -33,11 +34,11 @@ step_test() {
 		die "Missing install.sh"
 	fi
 
-	if [ `getconf LONG_BIT` = "64" ]; then
-		if [ ! -f /lib/modules/$(uname -r)/kernel/fs/binfmt_misc.ko ]; then
-			die "Missing binfmt_misc.ko"
-		fi
-	fi
+	# if [ `getconf LONG_BIT` = "64" ]; then
+	# 	if [ ! -f /lib/modules/$(uname -r)/kernel/fs/binfmt_misc.ko ]; then
+	# 		die "Missing binfmt_misc.ko"
+	# 	fi
+	# fi
 
 	if [ ! -f /usr/bin/qemu-arm-static ]; then
 		die "Missing /usr/bin/qemu-arm-static"
@@ -50,7 +51,7 @@ step_test() {
 
 step_download () {
 	einfo "Download"
-	wget "https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-09-30/2019-09-26-raspbian-buster-lite.zip" -O "${IMAGE}.zip"
+	wget -q "https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-09-30/2019-09-26-raspbian-buster-lite.zip" -O "${IMAGE}.zip"
 
 	if ! echo "${SHA256} ${IMAGE}.zip" | sha256sum --check --status; then
 		die "Bad sha256"
@@ -60,7 +61,7 @@ step_download () {
 step_unzip() {
 	einfo "Uzip ${IMAGE}.zip"
 	unzip -o "${IMAGE}.zip"
-	rm "${IMAGE}.zip"
+	# rm "${IMAGE}.zip"
 }
 
 step_chroot_enable() {
@@ -70,9 +71,9 @@ step_chroot_enable() {
 		return 0
 	fi
 
-	if [ `getconf LONG_BIT` = "64" ]; then
-	modprobe binfmt_misc
-	fi
+	# if [ `getconf LONG_BIT` = "64" ]; then
+	# modprobe binfmt_misc || true
+	# fi
 
 	kpartx -v -a "${IMAGE}"
 
@@ -88,13 +89,15 @@ step_chroot_enable() {
 
 	mount --bind /dev "${ROOT_DIR}/dev/"
 	mount --bind /dev/pts "${ROOT_DIR}/dev/pts"
-	mount --bind /sys "${ROOT_DIR}/sys/"
-	mount --bind /proc "${ROOT_DIR}/proc/"
+	mount --bind  /sys "${ROOT_DIR}/sys/"
+	mount -t proc proc "${ROOT_DIR}/proc/"
 	mount --bind /etc/resolv.conf "${ROOT_DIR}/etc/resolv.conf"
 
 	dpkg-reconfigure qemu-user-static
 
 	cp /usr/bin/qemu-arm-static ${ROOT_DIR}/usr/bin/
+
+	cp  ${ROOT_DIR}/bin/true ${ROOT_DIR}/usr/bin/ischroot
 
 	sed -i 's/^\//#CHROOT \//g' "${ROOT_DIR}/etc/ld.so.preload"
 }
@@ -137,9 +140,13 @@ step_chroot_disable() {
 
 	rm -f "${ROOT_DIR}/usr/bin/qemu-arm-static"
 
+	rm -f "${ROOT_DIR}/usr/bin/ischroot"
+
 	sed -i 's/^#CHROOT //g' "${ROOT_DIR}/etc/ld.so.preload"
 
 	sync
+
+	sleep 1
 
 	umount ${ROOT_DIR}/{dev/pts,dev,sys,proc,boot,etc/resolv.conf,}
 
@@ -147,13 +154,15 @@ step_chroot_disable() {
 
 	kpartx -d -v "${IMAGE}"
 
+	sleep 1
+
 	rmdir "${ROOT_DIR}"
 }
 
 step_zip() {
 	einfo "Zip"
 	mv ${IMAGE} bc-raspbian-${TRAVIS_TAG}.img
-	zip bc-raspbian-${TRAVIS_TAG}.img.zip bc-raspbian-${TRAVIS_TAG}.img
+	zip bc-raspbian-${TRAVIS_TAG}.zip bc-raspbian-${TRAVIS_TAG}.img
 }
 
 step_test

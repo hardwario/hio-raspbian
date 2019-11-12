@@ -14,10 +14,11 @@ set -eux
 
 step "Upgrade all packages:"
 sudo apt update
+sudo apt list --upgradable
 # sudo apt upgrade -y
 
 step "Install dependency"
-sudo apt install -y curl zip wget apt-transport-https
+sudo apt install -y curl zip wget apt-transport-https openssl
 
 step "Install Mosquitto server and clients:"
 curl -sL http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key | sudo apt-key add -
@@ -32,8 +33,8 @@ echo 'protocol mqtt'| sudo tee --append /etc/mosquitto/conf.d/mqtt.conf
 
 sudo systemctl enable mosquitto.service
 
-# step "Install Node.js version 12 (required by Node-RED)."
-curl -sL  https://deb.nodesource.com/setup_12.x | sudo bash -
+# step "Install Node.js version 10 (required by Node-RED)."
+curl -sL  https://deb.nodesource.com/setup_10.x | sudo bash -
 sudo apt install -y nodejs
 
 step "Install PM2:"
