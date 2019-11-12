@@ -13,7 +13,11 @@ export DEBIAN_FRONTEND='noninteractive'
 set -eux
 
 step "Upgrade all packages:"
-sudo apt update && sudo apt upgrade -y
+sudo apt update
+# sudo apt upgrade -y
+
+step "Install dependency"
+sudo apt install -y curl zip wget apt-transport-https
 
 step "Install Mosquitto server and clients:"
 curl -sL http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key | sudo apt-key add -
@@ -28,8 +32,8 @@ echo 'protocol mqtt'| sudo tee --append /etc/mosquitto/conf.d/mqtt.conf
 
 sudo systemctl enable mosquitto.service
 
-step "Install Node.js version 8 (required by Node-RED)."
-curl -sL  https://deb.nodesource.com/setup_8.x | sudo bash -
+# step "Install Node.js version 12 (required by Node-RED)."
+curl -sL  https://deb.nodesource.com/setup_12.x | sudo bash -
 sudo apt install -y nodejs
 
 step "Install PM2:"
@@ -77,5 +81,14 @@ echo 'SUBSYSTEMS=="usb", ACTION=="add", KERNEL=="ttyACM*", ATTRS{idVendor}=="048
 step "Http server"
 sudo apt install -y nginx
 
+WEB_ZIP_URL=$(curl -s https://api.github.com/repos/bigclownlabs/bch-hub-web/releases/latest | grep browser_download_url | grep zip | head -n 1 | cut -d '"' -f 4)
+wget "$WEB_ZIP_URL" -O /tmp/web.zip
+sudo unzip /tmp/web.zip -d /var/www/html
+rm /tmp/web.zip
+
 step "Install Important tools"
 sudo apt install -y git mc htop tmux
+
+step "Update .bashrc"
+sed -i "s/^#alias ll='ls -l'/alias ll='ls -lha'/g" ~/.bashrc
+echo 'eval "$(_BCF_COMPLETE=source bcf)"' >> ~/.bashrc
