@@ -11,18 +11,13 @@ script:
   - sudo ./build.sh
 before_deploy:
   # Workaround for https://github.com/travis-ci/dpl/issues/542
-  - sudo chown $(id -u) build/deploy/*.zip
+  - sudo chown $(id -u) *.zip
 deploy:
   provider: releases
   api_key:
     secure: "FtSdIUM2NmYfxEsPR8Bkt8OCAodE6gSIOYwZhV4xxEr9uZl7LbsN8dL9Oa3mfBC0O/VV0/wSPfIPSoaMDMuLaxlUrkSlYHWPhGqUMfKlb5J3gNlnuNnOJFXaMqCdn/NZjsRSq20dqXFfQIz/TTWGfTmegsc5uC62OBoz+OZmr/oiug4xO/Nzlw1pulS4wW7wHDAhy+ui9J43vQSHiJvvLSmGA6c6HQsSk+0AExXHOXrQj1Pcya9VnV2q3TJhVPz3NsKIP3i7GA52bmy0NxKc4/GWNdMraMBOA0tzCxpyvOJFJLxgJGsvA4M/GJZoYVgTAaNyjj8O0LFjRD8n4gOOUygSpkx2YzEwTEpAASpF7DrJZJy6MNv79zyjfm/bIYj0vvRDxU0UWNn54MYfffyFOcM7cJcIYdc6EU4fPfaxmtSKY3BCuSnLZIOY8MD8qUn9FmBxqccO8/jGiiERWt52+NDxwrQFikpzJMf29L9zRJPHrLC7mE2c97bO2OoTApfvBGR9kHLLnQX3oUFz7vpZtT+5PA/HBQfR17+BSx4eSgDmF5IrTyiY3KlFs9tZ8HpPuSkDQYl1lQhg1Iib1l3O0CbnDFlsuFuhUPOGV/RJw5la5e6D4quwpr6mxeUwxMQyEyTKNoRcAcArT9oy6gZXYBRRbQTXci+/6gL6gYAV4TI="
-  file: build/deploy/*.zip
+  file: "bc-raspbian-*.zip"
   file_glob: true
   skip_cleanup: true
   on:
     tags: true
-notifications:
-  slack:
-    rooms:
-      # bigclown:***#dev-hub
-      secure: TaozyccEKZSYk9bzLnUdo09J0OnB7yG97xNSgbCGYOg7H3kzA80JW9XknNQfNHW93dZq1Jxu4nAxBnroO9/mV9S5s5t3uxy4+WH+nFygYtDa/aRhNGdO707QQNwZcXPHE5wMLj8j1Sw5MUbFJQNN36db1iY9bfF5wHrSlbYJfO+RMqktMBOilMZzY4Q3IwfHmQrkja+LOi9Z7Rc8zDocy1/JuTtZES5hKihEpQLVfDCxUkXvofXUWSrhWn6uPK9bbJjPSC2VyNBb1l5eRFAGiA47INn3T6qrYJz8foHbHfYmSHUYUp68edM9/NoaYtjQt4XY+C/j0+HOedwcG2xpTBFNDLsK+EhVLkbfXCbjP1PweLlu/mkipZ8xXcEA8c17Zx2UJu2B9cFXJ6UD7PRNx7BCvILfk1bAqNAYJo43At5T9MPxzNu969lRHhUyaCUDPAsazLJzpqy0AxAiaprBBrvoCxN/RYNFTotqGanLzMBIFkXk68hGe7CmPlFY+zf3WVxP9x1txA6ijHS2lVTN4kcY1OHXfpwllZ/mt4I/ohf4G6MT+KNWafKNo575akmeYG9QMe/rVd/h7uS8PlYE0p+SW20O2NFr5GG7tcc/do6Z6EVY4SHcV+W4gyk+6p0C6+coVzbVFo0ZIE099EDzZJW3O857K6gqYPYQuHrt2Ng=
