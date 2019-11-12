@@ -19,21 +19,17 @@ Images are automatically built on [Travis CI](https://travis-ci.org/bigclownlabs
 
 Our image is built with the same scripts as the “official” one, with the following modifications:
 
-* Default name servers changed to: 8.8.8.8, 217.31.204.130, 2001:4860:4860::8888, 2001:1488:800:400::130.
 * Hostname changed from `raspberrypi` to `hub`.
-* Locale changed from `en_GB.UTF-8` to `en_US.UTF-8`.
-* Keymap changed from `English (UK)` to `English (US) - English (US, international with dead keys)`.
-* Timezone changed from `Etc/UTC` to `Europe/Prague`.
-* OpenSSH daemon enabled by default and removed `AcceptEnv LANG LC_*`.
+
 * Added third-party repositories:
-    * https://deb.nodesource.com/node_8.x
+    * https://deb.nodesource.com/node_12.x
     * http://repo.mosquitto.org/debian
+
 * Similar installations, as described in the [documentation](https://doc.bigclown.com/tutorials/playground-setup/#playground-setup-on-ubuntu)
 * Ports and services:
-    * 80: port forwarding to 8080
+    * 80: nginx (static contet from /var/www/html)
     * 1880: Node-RED
 	* 1883: Mosquitto mqtt
-	* 8080: http-server (static contet from /var/www)
 	* 9001: Mosquitto websocket
 
 * Installed additional packages:
@@ -55,13 +51,23 @@ Our image is built with the same scripts as the “official” one, with the fol
 	* node-red-contrib-ifttt
 	* node-red-contrib-blynk-ws
 	* ubidots-nodered (Node Red plugin)
-	* http-server
 
 * Installed via pip3:
 	* bcg
 	* bcf
 	* bch
 
+* Static file for web interface https://github.com/bigclownlabs/bch-hub-web
+
 ---
+
+## Local build
+
+### Install dependencies
+
+    sudo apt install kpartx coreutils zip qemu-user-static binfmt-support
+
+	sudo ./build.sh
+
 
 Made with &#x2764;&nbsp; by [**HARDWARIO s.r.o.**](https://www.hardwario.com/) in the heart of Europe.

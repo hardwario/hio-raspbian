@@ -95,7 +95,8 @@ step_chroot_enable() {
 	dpkg-reconfigure qemu-user-static
 
 	cp /usr/bin/qemu-arm-static ${ROOT_DIR}/usr/bin/
-	sed -i 's/^/#CHROOT /g' "${ROOT_DIR}/etc/ld.so.preload"
+
+	sed -i 's/^\//#CHROOT \//g' "${ROOT_DIR}/etc/ld.so.preload"
 }
 
 step_enable_ssh() {
@@ -151,8 +152,8 @@ step_chroot_disable() {
 
 step_zip() {
 	einfo "Zip"
-	mv ${IMAGE} bc-raspbian-${TRAVIS_TAG}-armhf-rpi.img
-	zip bc-raspbian-${TRAVIS_TAG}-armhf-rpi.img.zip bc-raspbian-${TRAVIS_TAG}-armhf-rpi.img
+	mv ${IMAGE} bc-raspbian-${TRAVIS_TAG}.img
+	zip bc-raspbian-${TRAVIS_TAG}.img.zip bc-raspbian-${TRAVIS_TAG}.img
 }
 
 step_test
