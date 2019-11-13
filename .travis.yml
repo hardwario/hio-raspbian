@@ -1,5 +1,16 @@
 sudo: required
 dist: bionic
+
+env:
+  matrix:
+    - NAME=bc-raspbian-buster-lite
+      URL=https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-09-30/2019-09-26-raspbian-buster-lite.zip
+      SHA256=a50237c2f718bd8d806b96df5b9d2174ce8b789eda1f03434ed2213bbca6c6ff
+
+    - NAME=bc-raspbian-buster
+      URL=https://downloads.raspberrypi.org/raspbian/images/raspbian-2019-09-30/2019-09-26-raspbian-buster.zip
+      SHA256=2c4067d59acf891b7aa1683cb1918da78d76d2552c02749148d175fa7f766842
+
 addons:
   apt:
     packages:
@@ -10,11 +21,14 @@ addons:
     - unzip
     - binfmt-support
     - openssl
+
 script:
   - sudo ./build.sh
+
 before_deploy:
   # Workaround for https://github.com/travis-ci/dpl/issues/542
   - sudo chown $(id -u) *.zip
+
 deploy:
   provider: releases
   api_key: ${GITHUB_KEY}

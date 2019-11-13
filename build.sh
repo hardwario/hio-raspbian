@@ -2,12 +2,16 @@
 # vim: set ts=4:
 set -eu
 
+if [[ ! -v URL ]]; then
 URL="https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-09-30/2019-09-26-raspbian-buster-lite.zip"
 SHA256="a50237c2f718bd8d806b96df5b9d2174ce8b789eda1f03434ed2213bbca6c6ff"
-IMAGE="2019-09-26-raspbian-buster-lite.img"
+NAME="bc-raspbian-buster-lite"
+fi
 
-BUILD_DIR="$(pwd)/build"
-ROOT_DIR=$BUILD_DIR/raspbian
+ROOT_DIR="$(pwd)/build/raspbian"
+
+IMAGE=${URL##*/}
+IMAGE="${IMAGE%.*}.img"
 
 die() {
 	printf '\033[1;31mERROR:\033[0m %s\n' "$1" >&2
@@ -51,7 +55,8 @@ step_test() {
 
 step_download () {
 	einfo "Download"
-	wget -q "https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-09-30/2019-09-26-raspbian-buster-lite.zip" -O "${IMAGE}.zip"
+	echo "${URL} as ${IMAGE}.zip"
+	wget -q "${URL}" -O "${IMAGE}.zip"
 
 	if ! echo "${SHA256} ${IMAGE}.zip" | sha256sum --check --status; then
 		die "Bad sha256"
@@ -61,7 +66,7 @@ step_download () {
 step_unzip() {
 	einfo "Uzip ${IMAGE}.zip"
 	unzip -o "${IMAGE}.zip"
-	# rm "${IMAGE}.zip"
+	rm "${IMAGE}.zip"
 }
 
 step_chroot_enable() {
@@ -161,8 +166,8 @@ step_chroot_disable() {
 
 step_zip() {
 	einfo "Zip"
-	mv ${IMAGE} bc-raspbian-${TRAVIS_TAG:-vdev}.img
-	zip bc-raspbian-${TRAVIS_TAG:-vdev}.zip bc-raspbian-${TRAVIS_TAG:-vdev}.img
+	mv ${IMAGE} "$NAME-${TRAVIS_TAG:-vdev}.img"
+	zip "$NAME-${TRAVIS_TAG:-vdev}.zip" "$NAME-${TRAVIS_TAG:-vdev}.img"
 }
 
 step_test
