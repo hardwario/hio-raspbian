@@ -161,8 +161,8 @@ step_chroot_disable() {
 
 step_zip() {
 	einfo "Zip"
-	mv ${IMAGE} bc-raspbian-${TRAVIS_TAG}.img
-	zip bc-raspbian-${TRAVIS_TAG}.zip bc-raspbian-${TRAVIS_TAG}.img
+	mv ${IMAGE} bc-raspbian-${TRAVIS_TAG:-vdev}.img
+	zip bc-raspbian-${TRAVIS_TAG:-vdev}.zip bc-raspbian-${TRAVIS_TAG:-vdev}.img
 }
 
 step_test
