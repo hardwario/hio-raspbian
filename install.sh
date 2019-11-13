@@ -47,6 +47,9 @@ step "Tell PM2 to run on boot:"
 sudo -H PM2_HOME=/home/$(whoami)/.pm2 pm2 startup systemd -u $(whoami)
 sudo -H chmod 644 /etc/systemd/system/pm2-$(whoami).service
 
+step "PM2 log rotate"
+sudo -H PM2_HOME=/home/$(whoami)/.pm2 pm2 logrotate -u $(whoami)
+
 step "Install Node-RED:"
 sudo npm install -g --unsafe-perm node-red
 
