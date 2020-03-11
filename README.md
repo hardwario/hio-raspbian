@@ -1,11 +1,11 @@
-<a href="https://www.bigclown.com/"><img src="https://bigclown.sirv.com/logo.png" width="200" alt="BigClown Logo" align="right"></a>
+<a href="https://www.hardwario.com/"><img src="https://www.hardwario.com/ci/assets/hw-logo.svg" width="200" alt="HARDWARIO Logo" align="right"></a>
 
-# BigClown Raspbian
+# HARDWARIO Raspbian
 
 [![Travis](https://img.shields.io/travis/bigclownlabs/bc-raspbian/master.svg)](https://travis-ci.org/bigclownlabs/bc-raspbian)
 [![Release](https://img.shields.io/github/release/bigclownlabs/bc-raspbian.svg)](https://github.com/bigclownlabs/bc-raspbian/releases)
 [![License](https://img.shields.io/github/license/bigclownlabs/bc-raspbian.svg)](https://github.com/bigclownlabs/bc-raspbian/blob/master/LICENSE)
-[![Twitter](https://img.shields.io/twitter/follow/BigClownLabs.svg?style=social&label=Follow)](https://twitter.com/BigClownLabs)
+[![Twitter](https://img.shields.io/twitter/follow/hardwario_en.svg?style=social&label=Follow)](https://twitter.com/hardwario_en)
 
 This repository contains scripts for building customized Raspbian image for Raspberry Pi.
 
