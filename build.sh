@@ -21,11 +21,11 @@ if [ ! -f install.sh ]; then
 	die "Missing install.sh"
 fi
 
-# if [ `getconf LONG_BIT` = "64" ]; then
-# 	if [ ! -f /lib/modules/$(uname -r)/kernel/fs/binfmt_misc.ko ]; then
-# 		die "Missing binfmt_misc.ko"
-# 	fi
-# fi
+if [ `getconf LONG_BIT` = "64" ]; then
+	if [ ! -f /lib/modules/$(uname -r)/kernel/fs/binfmt_misc.ko ]; then
+		die "Missing binfmt_misc.ko"
+	fi
+fi
 
 if [ ! -f /usr/bin/qemu-arm-static ]; then
 	die "Missing /usr/bin/qemu-arm-static"
@@ -67,6 +67,11 @@ cp -r files/node-red "$ROOT_DIR/home/pi/.node-red"
 chown 1000:1000 -R "$ROOT_DIR/home/pi/.node-red"
 install -m 666 files/wpa_supplicant.example.conf "$ROOT_DIR/boot/wpa_supplicant.example.conf"
 
+
+einfo "Disable IPv6 in APT"
+echo 'Acquire::ForceIPv4 "true";' >> "$ROOT_DIR/etc/apt/apt.conf.d/99force-ipv4"
+
+
 einfo "Chroot enable"
 chroot_enable
 
@@ -83,6 +88,10 @@ chroot_cmd "df -h"
 
 einfo "Chroot disable"
 chroot_disable
+
+
+einfo "Enable IPv6 in APT"
+rm "$ROOT_DIR/etc/apt/apt.conf.d/99force-ipv4"
 
 
 einfo "Umount img"
