@@ -17,23 +17,21 @@ fi
 
 cat << EOF
 ===========================================================================
-  ____  _        _____ _                     
- |  _ \(_)      / ____| |                    
- | |_) |_  __ _| |    | | _____      ___ __  
- |  _ <| |/ _\` | |    | |/ _ \ \ /\ / / '_ \ 
- | |_) | | (_| | |____| | (_) \ V  V /| | | |
- |____/|_|\__, |\_____|_|\___/ \_/\_/ |_| |_|
-           __/ |                             
-          |___/     >> IOT KIT FOR MAKERS <<
-                   
+  _    _          _____  _______          __     _____  _____ ____
+ | |  | |   /\   |  __ \|  __ \ \        / /\   |  __ \|_   _/ __ \
+ | |__| |  /  \  | |__) | |  | \ \  /\  / /  \  | |__) | | || |  | |
+ |  __  | / /\ \ |  _  /| |  | |\ \/  \/ / /\ \ |  _  /  | || |  | |
+ | |  | |/ ____ \| | \ \| |__| | \  /\  / ____ \| | \ \ _| || |__| |
+ |_|  |_/_/    \_|_|  \_|_____/   \/  \/_/    \_|_|  \_|_____\____/
+
 Projects, Hardware, Tutorials, Grafana and much more!
 
-https://www.bigclown.com/
-https://doc.bigclown.com/
-https://shop.bigclown.com/
-https://forum.bigclown.com/
+https://www.hardwario.com/
+https://developers.hardwario.com/
+https://shop.hardwario.com/
+https://forum.hardwario.com/
 
-Note: Use Node-RED to create your automation flows at $URL_NODE_RED 
+Note: Use Node-RED to create your automation flows at $URL_NODE_RED
 
 PM2 Process Manager
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -41,14 +39,14 @@ PM2 Process Manager
     pm2 stop bcg-ud                     stop USB Dongle MQTT gateway
     pm2 start bcg-ud                    start USB Dongle MQTT gateway
 
-BigClown Firmware Tool (for Core Module and USB Dongle flashing)
+HARDWARIO Firmware Tool (for Core Module and USB Dongle flashing)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     bcf update                          update firmware list from GitHub
     bcf list                            list available firmware packages
     bcf flash                           flash firmware (--dfu for DFU mode)
     bcf help
 
-BigClown Hub Control Tool (for USB Dongle and BigClown node management)
+HARDWARIO Hub Control Tool (for USB Dongle and HARDWARIO node management)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     bch pairing --start                 start pairing mode
     bch pairing --stop                  stop pairing mode
