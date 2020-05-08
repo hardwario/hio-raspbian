@@ -24,6 +24,7 @@ addons:
     - binfmt-support
     - openssl
     - systemd-container
+    - parted
 
 script:
   - sudo ./build.sh
