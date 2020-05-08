@@ -15,17 +15,17 @@ IMAGE="$(pwd)/${IMAGE%.*}.img"
 
 check_is_run_as_root
 
-check_commands parted losetup tune2fs md5sum e2fsck resize2fs kpartx systemd-nspawn
+check_commands parted losetup tune2fs sha256sum e2fsck resize2fs kpartx systemd-nspawn
 
 if [ ! -f install.sh ]; then
 	die "Missing install.sh"
 fi
 
-if [ `getconf LONG_BIT` = "64" ]; then
-	if [ ! -f /lib/modules/$(uname -r)/kernel/fs/binfmt_misc.ko ]; then
-		die "Missing binfmt_misc.ko"
-	fi
-fi
+# if [ `getconf LONG_BIT` = "64" ]; then
+# 	if [ ! -f /lib/modules/$(uname -r)/kernel/fs/binfmt_misc.ko ]; then
+# 		die "Missing binfmt_misc.ko"
+# 	fi
+# fi
 
 if [ ! -f /usr/bin/qemu-arm-static ]; then
 	die "Missing /usr/bin/qemu-arm-static"
