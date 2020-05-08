@@ -2,182 +2,93 @@
 # vim: set ts=4:
 set -eu
 
+. ./utils.sh
+
 if [[ ! -v URL ]]; then
 URL="http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip"
 SHA256="12ae6e17bf95b6ba83beca61e7394e7411b45eba7e6a520f434b0748ea7370e8"
 NAME="bc-raspbian-buster-lite"
 fi
 
-ROOT_DIR="$(pwd)/build/raspbian"
-
 IMAGE=${URL##*/}
-IMAGE="${IMAGE%.*}.img"
+IMAGE="$(pwd)/${IMAGE%.*}.img"
 
-die() {
-	printf '\033[1;31mERROR:\033[0m %s\n' "$1" >&2
-	shift
-	printf '  %s\n' "$@"
-	exit 2
-}
+check_is_run_as_root
 
-einfo() {
-	printf '\033[1;34m%s\033[0m\n' "$@" >&2
-}
+check_commands parted losetup tune2fs md5sum e2fsck resize2fs kpartx systemd-nspawn
 
-chroot_bash() {
-	# HOME=/home/pi LC_ALL='C.UTF-8' chroot --userspec=1000:1000 ${ROOT_DIR} /bin/bash
-	HOME=/home/pi LC_ALL='C.UTF-8' setarch linux32 chroot --userspec=1000:1000 ${ROOT_DIR} /bin/bash
-}
+if [ ! -f install.sh ]; then
+	die "Missing install.sh"
+fi
 
-chroot_cmd() {
-	echo "$@" | chroot_bash
-}
-
-step_test() {
-	if [ ! -f install.sh ]; then
-		die "Missing install.sh"
+if [ `getconf LONG_BIT` = "64" ]; then
+	if [ ! -f /lib/modules/$(uname -r)/kernel/fs/binfmt_misc.ko ]; then
+		die "Missing binfmt_misc.ko"
 	fi
+fi
 
-	# if [ `getconf LONG_BIT` = "64" ]; then
-	# 	if [ ! -f /lib/modules/$(uname -r)/kernel/fs/binfmt_misc.ko ]; then
-	# 		die "Missing binfmt_misc.ko"
-	# 	fi
-	# fi
+if [ ! -f /usr/bin/qemu-arm-static ]; then
+	die "Missing /usr/bin/qemu-arm-static"
+fi
 
-	if [ ! -f /usr/bin/qemu-arm-static ]; then
-		die "Missing /usr/bin/qemu-arm-static"
-	fi
+IMAGE_ZIP="${IMAGE}.zip"
 
-	if [ "$EUID" -ne 0 ]; then
-		die "Please run as root"
-	fi
-}
 
-step_download () {
-	einfo "Download"
-	echo "${URL} as ${IMAGE}.zip"
-	wget -q "${URL}" -O "${IMAGE}.zip"
+einfo "Download"
+echo "$URL as $IMAGE_ZIP"
+wget -q "$URL" -O "$IMAGE_ZIP"
+check_sha256_sum "$IMAGE_ZIP" $SHA256
 
-	if ! echo "${SHA256} ${IMAGE}.zip" | sha256sum --check --status; then
-		die "Bad sha256"
-	fi
-}
 
-step_unzip() {
-	einfo "Uzip ${IMAGE}.zip"
-	unzip -o "${IMAGE}.zip"
-	rm "${IMAGE}.zip"
-}
+einfo "Uzip"
+unzip -o "$IMAGE_ZIP"
+rm "$IMAGE_ZIP"
 
-step_chroot_enable() {
-	einfo "Chroot enable"
+einfo "Resize image"
+img_resize "$IMAGE" 256
 
-	if [ -d "${ROOT_DIR}" ]; then
-		return 0
-	fi
 
-	# if [ `getconf LONG_BIT` = "64" ]; then
-	# modprobe binfmt_misc || true
-	# fi
+einfo "Mount img"
+img_mount "$IMAGE"
 
-	kpartx -v -a "${IMAGE}"
 
-	LOOP_BOOT=/dev/mapper/$(kpartx -l "${IMAGE}" | head -n 1 | awk '{print $1}')
-	LOOP_ROOT=/dev/mapper/$(kpartx -l "${IMAGE}" | tail -n 1 | awk '{print $1}')
+einfo "Enable ssh server"
+touch "$ROOT_DIR/boot/ssh"
 
-	mkdir -p "${ROOT_DIR}"
 
-	sleep 3
+einfo "Change hostname"
+echo "hub" | tee "$ROOT_DIR/etc/hostname"
+sed -i "s/raspberrypi/hub/" "$ROOT_DIR/etc/hosts"
 
-	mount -o rw "${LOOP_ROOT}" "${ROOT_DIR}"
-	mount -o rw "${LOOP_BOOT}" "${ROOT_DIR}/boot"
 
-	mount --bind /dev "${ROOT_DIR}/dev/"
-	mount --bind /dev/pts "${ROOT_DIR}/dev/pts"
-	mount --bind  /sys "${ROOT_DIR}/sys/"
-	mount -t proc proc "${ROOT_DIR}/proc/"
-	mount --bind /etc/resolv.conf "${ROOT_DIR}/etc/resolv.conf"
+einfo "Copy files"
+install -m 755 -o 0 -g 0  files/update-motd.d/* "$ROOT_DIR/etc/update-motd.d/"
+cp -r files/node-red "$ROOT_DIR/home/pi/.node-red"
+chown 1000:1000 -R "$ROOT_DIR/home/pi/.node-red"
+install -m 666 files/wpa_supplicant.example.conf "$ROOT_DIR/boot/wpa_supplicant.example.conf"
 
-	dpkg-reconfigure qemu-user-static
+einfo "Chroot enable"
+chroot_enable
 
-	cp /usr/bin/qemu-arm-static ${ROOT_DIR}/usr/bin/
 
-	cp  ${ROOT_DIR}/bin/true ${ROOT_DIR}/usr/bin/ischroot
+einfo "Run install.sh"
+cat install.sh | chroot_bash
+chroot_cmd "pm2 kill"
 
-	sed -i 's/^\//#CHROOT \//g' "${ROOT_DIR}/etc/ld.so.preload"
-}
 
-step_enable_ssh() {
-	einfo "Enable ssh"
-	touch "${ROOT_DIR}/boot/ssh"
-}
+einfo "Clean up"
+chroot_cmd "sudo apt clean && sudo apt autoremove"
+chroot_cmd "df -h"
 
-step_change_hostname() {
-	einfo "Change hostname"
-	echo "hub" | tee "${ROOT_DIR}/etc/hostname"
-	sed -i "s/raspberrypi/hub/" "${ROOT_DIR}/etc/hosts"
-}
 
-step_copy_files() {
-	einfo "Copy files"
-	install -m 755 -o 0 -g 0  files/update-motd.d/* "${ROOT_DIR}/etc/update-motd.d/"
-	cp -r files/node-red "${ROOT_DIR}/home/pi/.node-red"
-	chown 1000:1000 -R "${ROOT_DIR}/home/pi/.node-red"
+einfo "Chroot disable"
+chroot_disable
 
-	install -m 666 files/wpa_supplicant.example.conf "${ROOT_DIR}/boot/wpa_supplicant.example.conf"
-}
 
-step_install_sh() {
-	einfo "Run install.sh"
+einfo "Umount img"
+img_umount "$IMAGE"
 
-	cat install.sh | chroot_bash
 
-	chroot_cmd "pm2 kill"
-}
-
-step_finish() {
-	einfo "Clean up"
-	chroot_cmd "sudo apt clean && sudo apt autoremove"
-}
-
-step_chroot_disable() {
-	einfo "Chroot disable"
-
-	rm -f "${ROOT_DIR}/usr/bin/qemu-arm-static"
-
-	rm -f "${ROOT_DIR}/usr/bin/ischroot"
-
-	sed -i 's/^#CHROOT //g' "${ROOT_DIR}/etc/ld.so.preload"
-
-	sync
-
-	sleep 1
-
-	umount ${ROOT_DIR}/{dev/pts,dev,sys,proc,boot,etc/resolv.conf,}
-
-	sync
-
-	kpartx -d -v "${IMAGE}"
-
-	sleep 1
-
-	rmdir "${ROOT_DIR}"
-}
-
-step_zip() {
-	einfo "Zip"
-	mv ${IMAGE} "$NAME-${TRAVIS_TAG:-vdev}.img"
-	zip "$NAME-${TRAVIS_TAG:-vdev}.zip" "$NAME-${TRAVIS_TAG:-vdev}.img"
-}
-
-step_test
-step_download
-step_unzip
-step_chroot_enable
-step_enable_ssh
-step_change_hostname
-step_copy_files
-step_install_sh
-step_finish
-step_chroot_disable
-step_zip
+einfo "Zip"
+mv $IMAGE "$NAME-${TRAVIS_TAG:-vdev}.img"
+zip "$NAME-${TRAVIS_TAG:-vdev}.zip" "$NAME-${TRAVIS_TAG:-vdev}.img"
