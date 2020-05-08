@@ -58,7 +58,7 @@ img_resize() {
 	parted $loopback rm 2
 	parted $loopback unit MB mkpart primary $partstart $(($partend + $2))
 
-	e2fsck -f "$loopback"p2
+	e2fsck -y -f "$loopback"p2
 	resize2fs "$loopback"p2
 
 	# parted $loopback unit MB print
