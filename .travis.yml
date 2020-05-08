@@ -21,6 +21,7 @@ addons:
     - unzip
     - binfmt-support
     - openssl
+    - systemd-container
 
 script:
   - sudo ./build.sh
