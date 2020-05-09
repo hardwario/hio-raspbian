@@ -33,7 +33,6 @@ fi
 
 IMAGE_ZIP="${IMAGE}.zip"
 
-
 einfo "Download"
 echo "$URL as $IMAGE_ZIP"
 wget -q "$URL" -O "$IMAGE_ZIP"
@@ -68,8 +67,11 @@ chown 1000:1000 -R "$ROOT_DIR/home/pi/.node-red"
 install -m 666 files/wpa_supplicant.example.conf "$ROOT_DIR/boot/wpa_supplicant.example.conf"
 
 
-einfo "Disable IPv6 in APT"
+einfo "Fix apt for Travis CI"
+echo "Disable IPv6 in APT"
 echo 'Acquire::ForceIPv4 "true";' >> "$ROOT_DIR/etc/apt/apt.conf.d/99force-ipv4"
+echo "Modify source.list"
+sed -r -i'' "s/raspbian.raspberrypi.org\/raspbian/reflection.oss.ou.edu\/raspbian\/raspbian/g" "$ROOT_DIR/etc/apt/sources.list"
 
 
 einfo "Chroot enable"
@@ -90,8 +92,11 @@ einfo "Chroot disable"
 chroot_disable
 
 
-einfo "Enable IPv6 in APT"
+einfo "Fix apt for Travis CI"
+echo "Enable IPv6 in APT"
 rm "$ROOT_DIR/etc/apt/apt.conf.d/99force-ipv4"
+echo "Remove modify source.list"
+sed -r -i'' "s/reflection.oss.ou.edu\/raspbian\/raspbian/raspbian.raspberrypi.org\/raspbian/g" "$ROOT_DIR/etc/apt/sources.list"
 
 
 einfo "Umount img"
