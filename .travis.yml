@@ -36,7 +36,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key: ${GITHUB_KEY}
-  file: "bc-raspbian-*.zip"
+  file: "hio-raspbian-*.zip"
   file_glob: true
   skip_cleanup: true
   on:
