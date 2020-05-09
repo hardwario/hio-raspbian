@@ -78,7 +78,7 @@ chroot_enable
 
 einfo "Update and Upgrade"
 echo 'sudo apt-get update' | chroot_bash
-echo 'sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade -y' | chroot_bash
+chroot_cmd 'sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade -y'
 
 
 einfo "Run install.sh"
@@ -87,7 +87,8 @@ chroot_cmd "pm2 kill"
 
 
 einfo "Clean up"
-chroot_cmd "sudo apt clean && sudo apt autoremove"
+chroot_cmd 'sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" clean -y'
+chroot_cmd 'sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" autoremove -y'
 chroot_cmd "df -h"
 
 
