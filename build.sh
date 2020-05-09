@@ -8,6 +8,7 @@ if [[ ! -v URL ]]; then
 URL="http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip"
 SHA256="12ae6e17bf95b6ba83beca61e7394e7411b45eba7e6a520f434b0748ea7370e8"
 NAME="bc-raspbian-buster-lite"
+ADD_SPACE=512
 fi
 
 IMAGE=${URL##*/}
@@ -44,7 +45,7 @@ unzip -o "$IMAGE_ZIP"
 rm "$IMAGE_ZIP"
 
 einfo "Resize image"
-img_resize "$IMAGE" 256
+img_resize "$IMAGE" $ADD_SPACE
 
 
 einfo "Mount img"
@@ -68,14 +69,16 @@ install -m 666 files/wpa_supplicant.example.conf "$ROOT_DIR/boot/wpa_supplicant.
 
 
 einfo "Fix apt for Travis CI"
-echo "Disable IPv6 in APT"
-echo 'Acquire::ForceIPv4 "true";' >> "$ROOT_DIR/etc/apt/apt.conf.d/99force-ipv4"
-echo "Modify source.list"
-sed -r -i'' "s/raspbian.raspberrypi.org\/raspbian/reflection.oss.ou.edu\/raspbian\/raspbian/g" "$ROOT_DIR/etc/apt/sources.list"
+add_fix_apt_for_travis_ci()
 
 
 einfo "Chroot enable"
 chroot_enable
+
+
+einfo "Update and Upgrade"
+echo 'sudo apt-get update' | chroot_bash
+echo 'sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade -y' | chroot_bash
 
 
 einfo "Run install.sh"
@@ -92,11 +95,8 @@ einfo "Chroot disable"
 chroot_disable
 
 
-einfo "Fix apt for Travis CI"
-echo "Enable IPv6 in APT"
-rm "$ROOT_DIR/etc/apt/apt.conf.d/99force-ipv4"
-echo "Remove modify source.list"
-sed -r -i'' "s/reflection.oss.ou.edu\/raspbian\/raspbian/raspbian.raspberrypi.org\/raspbian/g" "$ROOT_DIR/etc/apt/sources.list"
+einfo "Remove Fix apt for Travis CI"
+remove_fix_apt_for_travis_ci
 
 
 einfo "Umount img"
