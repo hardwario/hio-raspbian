@@ -7,7 +7,7 @@ set -eu
 if [[ ! -v URL ]]; then
 URL="http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip"
 SHA256="12ae6e17bf95b6ba83beca61e7394e7411b45eba7e6a520f434b0748ea7370e8"
-NAME="bc-raspbian-buster-lite"
+NAME="hio-raspbian-buster-lite"
 ADD_SPACE=512
 fi
 
@@ -69,7 +69,7 @@ install -m 666 files/wpa_supplicant.example.conf "$ROOT_DIR/boot/wpa_supplicant.
 
 
 einfo "Fix apt for Travis CI"
-add_fix_apt_for_travis_ci()
+add_fix_apt_for_travis_ci
 
 
 einfo "Chroot enable"
