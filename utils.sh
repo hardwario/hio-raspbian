@@ -143,3 +143,55 @@ chroot_bash() {
 chroot_cmd() {
 	echo "$@" | chroot_bash
 }
+
+img_shrink() {
+	beforesize=$(ls -lh "$1" | cut -d ' ' -f 5)
+	parted_output=$(parted -ms "$1" unit B print | tail -n 1)
+	partnum=$(echo "$parted_output" | cut -d ':' -f 1)
+	partstart=$(echo "$parted_output" | cut -d ':' -f 2 | tr -d 'B')
+	loopback=$(losetup -f --show -o $partstart "$1")
+	tune2fs_output=$(tune2fs -l "$loopback")
+	currentsize=$(echo "$tune2fs_output" | grep '^Block count:' | tr -d ' ' | cut -d ':' -f 2)
+	blocksize=$(echo "$tune2fs_output" | grep '^Block size:' | tr -d ' ' | cut -d ':' -f 2)
+
+	#Make sure filesystem is ok
+	e2fsck -p -f "$loopback"
+	minsize=$(resize2fs -P "$loopback" | cut -d ':' -f 2 | tr -d ' ')
+	if [[ $currentsize -eq $minsize ]]; then
+	echo "Image already shrunk to smallest size"
+	losetup -d "$loopback"
+	exit 0
+	fi
+
+	#Add some free space to the end of the filesystem
+	extra_space=$(($currentsize - $minsize))
+	for space in 5000 1000 100; do
+	if [[ $extra_space -gt $space ]]; then
+		minsize=$(($minsize + $space))
+		break
+	fi
+	done
+
+	#Shrink filesystem
+	resize2fs -p "$loopback" $minsize
+	if [[ $? != 0 ]]; then
+	losetup -d "$loopback"
+	die "ERROR: resize2fs failed..."
+	fi
+
+	losetup -d "$loopback"
+	sleep 1
+
+	#Shrink partition
+	partnewsize=$(($minsize * $blocksize))
+	newpartend=$(($partstart + $partnewsize))
+	parted -s -a minimal "$1" rm $partnum >/dev/null
+	parted -s "$1" unit B mkpart primary $partstart $newpartend >/dev/null
+
+	#Truncate the file
+	endresult=$(parted -ms "$1" unit B print free | tail -1 | cut -d ':' -f 2 | tr -d 'B')
+	truncate -s $endresult "$1"
+	aftersize=$(ls -lh "$1" | cut -d ' ' -f 5)
+
+	echo "Shrunk $1 from $beforesize to $aftersize"
+}
