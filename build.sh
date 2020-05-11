@@ -8,7 +8,6 @@ if [[ ! -v URL ]]; then
 URL="http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip"
 SHA256="12ae6e17bf95b6ba83beca61e7394e7411b45eba7e6a520f434b0748ea7370e8"
 NAME="hio-raspbian-buster-lite"
-ADD_SPACE=512
 fi
 
 IMAGE=${URL##*/}
@@ -45,7 +44,7 @@ unzip -o "$IMAGE_ZIP"
 rm "$IMAGE_ZIP"
 
 einfo "Resize image"
-img_resize "$IMAGE" $ADD_SPACE
+img_resize "$IMAGE" 512
 
 
 einfo "Mount img"
@@ -66,10 +65,6 @@ install -m 755 -o 0 -g 0  files/update-motd.d/* "$ROOT_DIR/etc/update-motd.d/"
 cp -r files/node-red "$ROOT_DIR/home/pi/.node-red"
 chown 1000:1000 -R "$ROOT_DIR/home/pi/.node-red"
 install -m 666 files/wpa_supplicant.example.conf "$ROOT_DIR/boot/wpa_supplicant.example.conf"
-
-
-einfo "Fix apt for Travis CI"
-add_fix_apt_for_travis_ci
 
 
 einfo "Chroot enable"
@@ -96,14 +91,10 @@ einfo "Chroot disable"
 chroot_disable
 
 
-einfo "Remove Fix apt for Travis CI"
-remove_fix_apt_for_travis_ci
-
-
 einfo "Umount img"
 img_umount "$IMAGE"
 
 
-einfo "Zip"
+einfo "Zip $NAME-${TRAVIS_TAG:-vdev}.img"
 mv $IMAGE "$NAME-${TRAVIS_TAG:-vdev}.img"
 zip "$NAME-${TRAVIS_TAG:-vdev}.zip" "$NAME-${TRAVIS_TAG:-vdev}.img"

@@ -107,9 +107,19 @@ chroot_enable() {
 	cp  ${ROOT_DIR}/bin/true ${ROOT_DIR}/usr/bin/ischroot
 
 	sed -i 's/^\//#CHROOT \//g' "${ROOT_DIR}/etc/ld.so.preload"
+
+	echo "Disable IPv6 in APT"
+	echo 'Acquire::ForceIPv4 "true";' >> "$ROOT_DIR/etc/apt/apt.conf.d/99force-ipv4"
+	echo "Modify source.list"
+	sed -r -i'' "s/raspbian.raspberrypi.org\/raspbian/reflection.oss.ou.edu\/raspbian\/raspbian/g" "$ROOT_DIR/etc/apt/sources.list"
 }
 
 chroot_disable() {
+	echo "Enable IPv6 in APT"
+	rm "$ROOT_DIR/etc/apt/apt.conf.d/99force-ipv4"
+	echo "Remove modify source.list"
+	sed -r -i'' "s/reflection.oss.ou.edu\/raspbian\/raspbian/raspbian.raspberrypi.org\/raspbian/g" "$ROOT_DIR/etc/apt/sources.list"
+
 	rm -f "${ROOT_DIR}/usr/bin/qemu-arm-static"
 
 	rm -f "${ROOT_DIR}/usr/bin/ischroot"
@@ -132,18 +142,4 @@ chroot_bash() {
 
 chroot_cmd() {
 	echo "$@" | chroot_bash
-}
-
-add_fix_apt_for_travis_ci() {
-	echo "Disable IPv6 in APT"
-	echo 'Acquire::ForceIPv4 "true";' >> "$ROOT_DIR/etc/apt/apt.conf.d/99force-ipv4"
-	echo "Modify source.list"
-	sed -r -i'' "s/raspbian.raspberrypi.org\/raspbian/reflection.oss.ou.edu\/raspbian\/raspbian/g" "$ROOT_DIR/etc/apt/sources.list"
-}
-
-remove_fix_apt_for_travis_ci() {
-	echo "Enable IPv6 in APT"
-	rm "$ROOT_DIR/etc/apt/apt.conf.d/99force-ipv4"
-	echo "Remove modify source.list"
-	sed -r -i'' "s/reflection.oss.ou.edu\/raspbian\/raspbian/raspbian.raspberrypi.org\/raspbian/g" "$ROOT_DIR/etc/apt/sources.list"
 }
