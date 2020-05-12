@@ -33,68 +33,119 @@ fi
 
 IMAGE_ZIP="${IMAGE}.zip"
 
-einfo "Download"
+step "Download"
 echo "$URL as $IMAGE_ZIP"
 wget -q "$URL" -O "$IMAGE_ZIP"
 check_sha256_sum "$IMAGE_ZIP" $SHA256
 
 
-einfo "Uzip"
+step "Uzip"
 unzip -o "$IMAGE_ZIP"
 rm "$IMAGE_ZIP"
 
-einfo "Resize image"
+
+step "Resize image"
 img_resize "$IMAGE" 512
 
 
-einfo "Mount img"
+step "Mount img"
 img_mount "$IMAGE"
 
 
-einfo "Enable ssh server"
+step "Enable ssh server"
 touch "$ROOT_DIR/boot/ssh"
 
 
-einfo "Change hostname"
+step "Change hostname"
 echo "hub" | tee "$ROOT_DIR/etc/hostname"
 sed -i "s/raspberrypi/hub/" "$ROOT_DIR/etc/hosts"
 
 
-einfo "Copy files"
+step "Copy files"
 install -m 755 -o 0 -g 0  files/update-motd.d/* "$ROOT_DIR/etc/update-motd.d/"
 cp -r files/node-red "$ROOT_DIR/home/pi/.node-red"
 chown 1000:1000 -R "$ROOT_DIR/home/pi/.node-red"
 install -m 666 files/wpa_supplicant.example.conf "$ROOT_DIR/boot/wpa_supplicant.example.conf"
 
 
-einfo "Chroot enable"
+step "Chroot enable"
 chroot_enable
 
 
-einfo "Update and Upgrade"
+step "Update and Upgrade"
 echo 'sudo apt-get update' | chroot_bash
 chroot_cmd 'sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade -y'
 
 
-einfo "Run install.sh"
+step "Run install.sh"
 cat install.sh | chroot_bash
+
+
+step "Clean up"
 chroot_cmd "pm2 kill"
-
-
-einfo "Clean up"
 chroot_cmd 'sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" clean -y'
 chroot_cmd 'sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" autoremove -y'
 chroot_cmd "df -h"
 
 
-einfo "Chroot disable"
+step "Chroot disable"
 chroot_disable
 
 
-einfo "Umount img"
+step "Umount img"
 img_umount "$IMAGE"
 
 
-einfo "Zip $NAME-${TRAVIS_TAG:-vdev}.img"
+step "Shrink img"
+img_shrink "$IMAGE"
+
+
+step "Zip $NAME-${TRAVIS_TAG:-vdev}"
 mv $IMAGE "$NAME-${TRAVIS_TAG:-vdev}.img"
 zip "$NAME-${TRAVIS_TAG:-vdev}.zip" "$NAME-${TRAVIS_TAG:-vdev}.img"
+
+
+einfo "--- Grafana, InfluxDB, mqtt2influxdb ---"
+
+step "Rename img"
+mv "$NAME-${TRAVIS_TAG:-vdev}.img" $IMAGE
+
+
+step "Resize image"
+img_resize "$IMAGE" 640
+
+
+step "Mount img"
+img_mount "$IMAGE"
+
+
+step "Chroot enable"
+chroot_enable
+
+
+step "Run install-grafana-influxdb-mqtt2influxdb.sh"
+echo "pm2 resurrect" | cat - install-grafana-influxdb-mqtt2influxdb.sh | chroot_bash
+
+
+step "Clean up"
+chroot_cmd "pm2 kill"
+chroot_cmd 'sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" clean -y'
+chroot_cmd 'sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" autoremove -y'
+chroot_cmd "df -h"
+
+
+step "Chroot disable"
+chroot_disable
+
+
+step "Umount img"
+img_umount "$IMAGE"
+
+
+step "Shrink img"
+img_shrink "$IMAGE"
+
+
+step "Zip $NAME-grafana-influxdb-${TRAVIS_TAG:-vdev}"
+mv $IMAGE "$NAME-grafana-influxdb-${TRAVIS_TAG:-vdev}.img"
+zip "$NAME-grafana-influxdb-${TRAVIS_TAG:-vdev}.zip" "$NAME-grafana-influxdb-${TRAVIS_TAG:-vdev}.img"

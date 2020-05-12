@@ -20,6 +20,13 @@ ewarn() {
 	printf '\033[1;33m> %s\033[0m\n' "$@" >&2
 }
 
+_step_counter=0
+
+step() {
+	_step_counter=$(( _step_counter + 1 ))
+	printf '\n\033[1;36m%d) %s\033[0m\n' $_step_counter "$@" >&2  # bold cyan
+}
+
 has() {
 	command -v "$1" >/dev/null 2>&1
 }
@@ -46,7 +53,7 @@ check_sha256_sum() {
 
 img_resize() {
 	# usage: img_resize img_path size_in_MB
-	dd if=/dev/zero bs=1M count=$2 >> "$1"
+	dd if=/dev/zero bs=1M count=$(($2 + 1)) >> "$1"
 
 	parted_output=$(parted -ms "$1" unit MB print | tail -n 1)
 	partstart=$(echo "$parted_output" | cut -d ':' -f 2 | tr -d 'MB')
@@ -159,8 +166,9 @@ img_shrink() {
 	minsize=$(resize2fs -P "$loopback" | cut -d ':' -f 2 | tr -d ' ')
 	if [[ $currentsize -eq $minsize ]]; then
 	echo "Image already shrunk to smallest size"
+	echo "currentsize: $currentsize minsize: $minsize"
 	losetup -d "$loopback"
-	exit 0
+	return 0
 	fi
 
 	#Add some free space to the end of the filesystem
