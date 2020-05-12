@@ -1,19 +1,6 @@
 #!/bin/bash
 
-IP_ETH=$(ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
-IP_WIFI=$(ip -4 addr show wlan0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
-
-URL_NODE_RED=""
-
-if [[ -n "$IP_ETH" ]]
-then
-URL_NODE_RED="http://$IP_ETH:1880/"
-fi
-
-if [[ -n "$IP_WIFI" ]]
-then
-URL_NODE_RED+=" http://$IP_WIFI:1880/"
-fi
+HUB_VERSION=$(cat /usr/lib/hub-version)
 
 cat << EOF
 ===============================================================================
@@ -31,8 +18,7 @@ cat << EOF
     https://forum.hardwario.com/
     https://shop.hardwario.com/
 
-    Note: Use Node-RED to create your automation flows at:
-          $URL_NODE_RED
+    HARDWARIO Hub ${HUB_VERSION}
 
     PM2 Process Manager
     ^^^^^^^^^^^^^^^^^^^

@@ -66,6 +66,7 @@ install -m 755 -o 0 -g 0  files/update-motd.d/* "$ROOT_DIR/etc/update-motd.d/"
 cp -r files/node-red "$ROOT_DIR/home/pi/.node-red"
 chown 1000:1000 -R "$ROOT_DIR/home/pi/.node-red"
 install -m 666 files/wpa_supplicant.example.conf "$ROOT_DIR/boot/wpa_supplicant.example.conf"
+echo "${TRAVIS_TAG:-vdev}" > "$ROOT_DIR/usr/lib/hub-version"
 
 
 step "Chroot enable"
