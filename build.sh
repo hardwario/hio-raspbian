@@ -73,11 +73,6 @@ step "Chroot enable"
 chroot_enable
 
 
-step "Update and Upgrade"
-echo 'sudo apt-get update' | chroot_bash
-chroot_cmd 'sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade -y'
-
-
 step "Run install.sh"
 cat install.sh | chroot_bash
 
@@ -102,14 +97,14 @@ img_shrink "$IMAGE"
 
 
 step "Zip $NAME-${TRAVIS_TAG:-vdev}"
-mv $IMAGE "$NAME-${TRAVIS_TAG:-vdev}.img"
+mv "$IMAGE" "$NAME-${TRAVIS_TAG:-vdev}.img"
 zip "$NAME-${TRAVIS_TAG:-vdev}.zip" "$NAME-${TRAVIS_TAG:-vdev}.img"
 
 
 einfo "--- Grafana, InfluxDB, mqtt2influxdb ---"
 
 step "Rename img"
-mv "$NAME-${TRAVIS_TAG:-vdev}.img" $IMAGE
+mv "$NAME-${TRAVIS_TAG:-vdev}.img" "$IMAGE"
 
 
 step "Resize image"

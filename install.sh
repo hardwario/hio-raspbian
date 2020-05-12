@@ -12,10 +12,8 @@ export DEBIAN_FRONTEND='noninteractive'
 
 set -eux
 
-step "Upgrade all packages:"
+step "Upgrade packages:"
 sudo apt update
-sudo apt list --upgradable
-# sudo apt upgrade -y
 
 step "Install dependency"
 sudo apt install -y curl zip wget apt-transport-https openssl

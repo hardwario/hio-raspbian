@@ -9,8 +9,11 @@ step() {
 	printf '\n\033[1;36m%d) %s\033[0m\n' $_step_counter "$@" >&2
 }
 
-step 'Update and upgrade packages'
-sudo apt update && sudo apt upgrade -y
+export LC_ALL='C.UTF-8'
+export DEBIAN_FRONTEND='noninteractive'
+
+step 'Update packages'
+sudo apt update
 
 step 'Install dependencies'
 sudo apt install apt-transport-https curl adduser libfontconfig python3-pip -y
