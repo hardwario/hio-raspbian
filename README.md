@@ -61,6 +61,23 @@ Our image is built with the same scripts as the “official” one, with the fol
 
 ---
 
+## Troubleshooting
+
+### Fix nodejs on Raspberry PI with armv6l
+
+If you get an error: Illegal instruction
+
+```
+sudo apt remove nodejs
+wget https://nodejs.org/dist/v11.9.0/node-v11.9.0-linux-armv6l.tar.gz
+tar -xzf node-v11.9.0-linux-armv6l.tar.gz
+cd node-v11.9.0-linux-armv6l/
+sudo cp -R * /usr/local/
+
+pm2 resurrect
+```
+
+
 ## Local build
 
 ### Install dependencies
