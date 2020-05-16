@@ -24,17 +24,17 @@ cat << EOF
     PM2 Process Manager
     ^^^^^^^^^^^^^^^^^^^
         pm2 list                      List running services
-        pm2 stop bcg-ud               Stop USB Dongle MQTT gateway
-        pm2 start bcg-ud              Start USB Dongle MQTT gateway
+        pm2 stop bcg-ud               Stop Radio Dongle MQTT gateway
+        pm2 start bcg-ud              Start Radio Dongle MQTT gateway
 
-    HARDWARIO Firmware Tool (for Core Module and USB Dongle flashing)
+    HARDWARIO Firmware Tool (for Core Module and Radio Dongle flashing)
     ^^^^^^^^^^^^^^^^^^^^^^^
         bcf update                    Update firmware list from GitHub
         bcf list                      List available firmware packages
         bcf flash                     Flash firmware (--dfu for DFU mode)
         bcf help
 
-    HARDWARIO Hub Control Tool (for USB Dongle and node management)
+    HARDWARIO Hub Control Tool (for Radio Dongle and node management)
     ^^^^^^^^^^^^^^^^^^^^^^^^^^
         bch pairing --start           Start pairing mode
         bch pairing --stop            Stop pairing mode
