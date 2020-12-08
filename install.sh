@@ -83,7 +83,7 @@ echo 'SUBSYSTEMS=="usb", ACTION=="add", KERNEL=="ttyACM*", ATTRS{idVendor}=="048
 step "Http server"
 sudo apt install -y nginx
 
-WEB_ZIP_URL=$(curl -s https://api.github.com/repos/bigclownlabs/bch-hub-web/releases/latest | grep browser_download_url | grep zip | head -n 1 | cut -d '"' -f 4)
+WEB_ZIP_URL=$(curl -L -s https://api.github.com/repos/bigclownlabs/bch-hub-web/releases/latest | grep browser_download_url | grep zip | head -n 1 | cut -d '"' -f 4)
 wget "$WEB_ZIP_URL" -O /tmp/web.zip
 sudo unzip /tmp/web.zip -d /var/www/html
 rm /tmp/web.zip
