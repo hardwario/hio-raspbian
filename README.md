@@ -2,18 +2,18 @@
 
 # HARDWARIO Raspbian
 
-[![Travis](https://img.shields.io/travis/bigclownlabs/bc-raspbian/master.svg)](https://travis-ci.org/bigclownlabs/bc-raspbian)
-[![Release](https://img.shields.io/github/release/bigclownlabs/bc-raspbian.svg)](https://github.com/bigclownlabs/bc-raspbian/releases)
-[![License](https://img.shields.io/github/license/bigclownlabs/bc-raspbian.svg)](https://github.com/bigclownlabs/bc-raspbian/blob/master/LICENSE)
+[![Travis](https://img.shields.io/travis/hardwario/bc-raspbian/master.svg)](https://travis-ci.org/hardwario/bc-raspbian)
+[![Release](https://img.shields.io/github/release/hardwario/bc-raspbian.svg)](https://github.com/hardwario/bc-raspbian/releases)
+[![License](https://img.shields.io/github/license/hardwario/bc-raspbian.svg)](https://github.com/hardwario/bc-raspbian/blob/master/LICENSE)
 [![Twitter](https://img.shields.io/twitter/follow/hardwario_en.svg?style=social&label=Follow)](https://twitter.com/hardwario_en)
 
 This repository contains scripts for building customized Raspbian image for Raspberry Pi.
 
-Prebuilt images for your Raspberry Pi are available in [Releases](https://github.com/bigclownlabs/bc-raspbian/releases) – just pick a ZIP file from the Latest release.
+Prebuilt images for your Raspberry Pi are available in [Releases](https://github.com/hardwario/bc-raspbian/releases) – just pick a ZIP file from the Latest release.
 
 Installation procedure is the same as for original Raspbian image which is described [here](https://www.raspberrypi.org/documentation/installation/installing-images/).
 
-Images are automatically built on [Travis CI](https://travis-ci.org/bigclownlabs/bc-raspbian).
+Images are automatically built on [Travis CI](https://travis-ci.org/hardwario/bc-raspbian).
 
 ## Modifications in this image
 
@@ -57,7 +57,7 @@ Our image is built with the same scripts as the “official” one, with the fol
 	* bcf
 	* bch
 
-* Static file for web interface https://github.com/bigclownlabs/bch-hub-web
+* Static file for web interface https://github.com/hardwario/bch-hub-web
 
 ---
 
@@ -86,5 +86,11 @@ pm2 resurrect
 
 	sudo ./build.sh
 
+
+## License
+
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT/) - see the [LICENSE](LICENSE) file for details.
+
+---
 
 Made with &#x2764;&nbsp; by [**HARDWARIO s.r.o.**](https://www.hardwario.com/) in the heart of Europe.
