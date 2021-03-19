@@ -4,12 +4,12 @@ dist: bionic
 env:
   matrix:
     - NAME=hio-raspbian-buster-lite
-      URL=http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip
-      SHA256=12ae6e17bf95b6ba83beca61e7394e7411b45eba7e6a520f434b0748ea7370e8
+      URL=https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-01-12/2021-01-11-raspios-buster-armhf-lite.zip
+      SHA256=d49d6fab1b8e533f7efc40416e98ec16019b9c034bc89c59b83d0921c2aefeef
 
     - NAME=hio-raspbian-buster-desktop
-      URL=http://downloads.raspberrypi.org/raspbian/images/raspbian-2020-02-14/2020-02-13-raspbian-buster.zip
-      SHA256=a82ed4139dfad31c3167e60e943bcbe28c404d1858f4713efe5530c08a419f50
+      URL=https://downloads.raspberrypi.org/raspios_armhf/images/raspios_armhf-2021-01-12/2021-01-11-raspios-buster-armhf.zip
+      SHA256=cb1efa778f3a4effda7bf6f622e8e8e779f5303ac77ac8c558061aece9020fe6
 
 addons:
   apt:

@@ -31,8 +31,8 @@ echo 'protocol mqtt'| sudo tee --append /etc/mosquitto/conf.d/mqtt.conf
 
 sudo systemctl enable mosquitto.service
 
-# step "Install Node.js version 12 (required by Node-RED)."
-curl -sL  https://deb.nodesource.com/setup_12.x | sudo bash -
+step "Install Node.js version 14 (required by Node-RED)."
+curl -sL  https://deb.nodesource.com/setup_14.x | sudo bash -
 sudo apt install -y nodejs
 
 step "Install PM2:"
