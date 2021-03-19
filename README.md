@@ -22,7 +22,7 @@ Our image is built with the same scripts as the “official” one, with the fol
 * Hostname changed from `raspberrypi` to `hub`.
 
 * Added third-party repositories:
-    * https://deb.nodesource.com/node_12.x
+    * https://deb.nodesource.com/node_14.x
     * http://repo.mosquitto.org/debian
 
 * Similar installations, as described in the [documentation](https://doc.bigclown.com/tutorials/playground-setup/#playground-setup-on-ubuntu)
