@@ -28,6 +28,7 @@ echo 'listener 9001' | sudo tee /etc/mosquitto/conf.d/websocket.conf
 echo 'protocol websockets' | sudo tee --append /etc/mosquitto/conf.d/websocket.conf
 echo 'listener 1883' | sudo tee /etc/mosquitto/conf.d/mqtt.conf
 echo 'protocol mqtt'| sudo tee --append /etc/mosquitto/conf.d/mqtt.conf
+echo 'allow_anonymous true' | sudo tee /etc/mosquitto/conf.d/auth.conf
 
 sudo systemctl enable mosquitto.service
 
