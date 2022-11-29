@@ -73,13 +73,13 @@ sudo apt install -y dfu-util
 sudo pip3 install --upgrade bcf bch bcg
 
 step "Run service for Gateway Radio Dongle:"
-pm2 start /usr/bin/python3 --name "bcg-ud" -- /usr/local/bin/bcg --device /dev/bcUD0
+pm2 start /usr/bin/python3 --name "bcg-ud" -- /usr/local/bin/bcg --device /dev/bcUD
 pm2 save
 
 step "Add udev rules:"
-echo 'SUBSYSTEMS=="usb", ACTION=="add", KERNEL=="ttyUSB*", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6015", ATTRS{serial}=="bc-usb-dongle*", SYMLINK+="bcUD%n", TAG+="systemd", ENV{SYSTEMD_ALIAS}="/dev/bcUD%n"' | sudo tee /etc/udev/rules.d/58-hardwario-usb-dongle.rules
+echo 'SUBSYSTEMS=="usb", ACTION=="add", KERNEL=="ttyUSB*", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6015", ATTRS{serial}=="bc-usb-dongle*", SYMLINK+="bcUD", TAG+="systemd", ENV{SYSTEMD_ALIAS}="/dev/bcUD"' | sudo tee /etc/udev/rules.d/58-hardwario-usb-dongle.rules
 echo 'SUBSYSTEMS=="usb", ACTION=="add", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", ENV{ID_MM_DEVICE_IGNORE}="1"' | sudo tee /etc/udev/rules.d/59-hardwario-core-module.rules
-echo 'SUBSYSTEMS=="usb", ACTION=="add", KERNEL=="ttyACM*", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", SYMLINK+="bcCM%n", TAG+="systemd", ENV{SYSTEMD_ALIAS}="/dev/bcCM%n"' | sudo tee --append /etc/udev/rules.d/59-hardwario-core-module.rules
+echo 'SUBSYSTEMS=="usb", ACTION=="add", KERNEL=="ttyACM*", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", SYMLINK+="bcCM", TAG+="systemd", ENV{SYSTEMD_ALIAS}="/dev/bcCM"' | sudo tee --append /etc/udev/rules.d/59-hardwario-core-module.rules
 
 step "Http server"
 sudo apt install -y nginx
