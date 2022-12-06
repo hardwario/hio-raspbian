@@ -45,7 +45,7 @@ sudo -H pip3 install -U --no-cache-dir mqtt2influxdb
 
 step 'Download default config for HARDWARIO Kit'
 sudo mkdir -p /etc/hardwario
-sudo wget "https://raw.githubusercontent.com/bigclownlabs/bch-mqtt2influxdb/master/config-bigclown.yml" -O "/etc/hardwario/mqtt2influxdb.yml"
+sudo wget "https://raw.githubusercontent.com/hardwario/bch-mqtt2influxdb/master/config-bigclown.yml" -O "/etc/hardwario/mqtt2influxdb.yml"
 
 step 'Configuration file test'
 mqtt2influxdb -c /etc/hardwario/mqtt2influxdb.yml --test

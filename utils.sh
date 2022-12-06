@@ -94,9 +94,11 @@ img_umount() {
 	umount -l "${ROOT_DIR}/boot"
 	umount -l "${ROOT_DIR}"
 
-	sleep 1
+	sleep 5m
 
 	kpartx -d -v "${IMAGE}"
+
+	sleep 5m
 
 	rmdir "${ROOT_DIR}"
 }
@@ -118,7 +120,6 @@ chroot_enable() {
 	echo "Disable IPv6 in APT"
 	echo 'Acquire::ForceIPv4 "true";' >> "$ROOT_DIR/etc/apt/apt.conf.d/99force-ipv4"
 	echo "Modify source.list"
-	sed -r -i'' "s/raspbian.raspberrypi.org\/raspbian/reflection.oss.ou.edu\/raspbian\/raspbian/g" "$ROOT_DIR/etc/apt/sources.list"
 }
 
 chroot_disable() {
@@ -144,7 +145,7 @@ chroot_disable() {
 chroot_bash() {
 	# HOME=/home/pi LC_ALL='C.UTF-8' chroot --userspec=1000:1000 ${ROOT_DIR} /bin/bash
 	# HOME=/home/pi LC_ALL='C.UTF-8' setarch linux32 chroot --userspec=1000:1000 ${ROOT_DIR} /bin/bash
-	systemd-nspawn -D "${ROOT_DIR}" -E HOME=/home/pi -E LC_ALL='C.UTF-8' -u 1000 bin/bash
+	systemd-nspawn -D "${ROOT_DIR}" -E HOME=/home/pi -E LC_ALL='C.UTF-8' --pipe -u 1000 bin/bash
 }
 
 chroot_cmd() {
@@ -188,7 +189,7 @@ img_shrink() {
 	fi
 
 	losetup -d "$loopback"
-	sleep 1
+	sleep 5m
 
 	#Shrink partition
 	partnewsize=$(($minsize * $blocksize))

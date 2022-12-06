@@ -1,0 +1,78 @@
+name: main
+
+on:
+  release:
+    types: [ published ]
+  workflow_dispatch:
+
+env:
+  VERSION: ${GITHUB_REF##*/}
+
+jobs:
+  build-lite:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup env
+      run: |
+        echo "VERSION=${{env.VERSION}}" >> "$GITHUB_ENV"
+
+    - uses: awalsh128/cache-apt-pkgs-action@latest
+      with:
+        packages: kpartx coreutils qemu-user-static zip unzip binfmt-support openssl systemd-container parted xz-utils binfmt-support qemu-user-static
+
+    - name: Build Raspbian Lite
+      env:
+        NAME: hio-raspbian-bullseye-lite
+        URL: https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2022-09-26/2022-09-22-raspios-bullseye-armhf-lite.img.xz
+        SHA256: 9bf5234efbadd2d39769486e0a20923d8526a45eba57f74cda45ef78e2b628da
+        VERSION: ${{env.VERSION}}
+      run: |
+        sudo -E ./build.sh
+
+    - name: Release
+      if: ${{ github.event_name == 'release' }}
+      uses: softprops/action-gh-release@v0.1.5
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        files: |
+          hio-raspbian-bullseye-lite-${{env.VERSION}}.zip
+          hio-raspbian-bullseye-lite-grafana-influxdb-${{env.VERSION}}.zip
+
+  build-desktop:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup env
+      run: |
+        echo "VERSION=${{env.VERSION}}" >> "$GITHUB_ENV"
+
+    - uses: awalsh128/cache-apt-pkgs-action@latest
+      with:
+        packages: kpartx coreutils qemu-user-static zip unzip binfmt-support openssl systemd-container parted xz-utils binfmt-support qemu-user-static
+
+    - name: Build Raspbian Desktop
+      env:
+        NAME: hio-raspbian-bullseye-desktop
+        URL: https://downloads.raspberrypi.org/raspios_armhf/images/raspios_armhf-2022-09-26/2022-09-22-raspios-bullseye-armhf.img.xz
+        SHA256: 4d8f38d014a807198996693b90cbeef94e19d9fd7fbefba7068db8df4d698cdd
+        VERSION: ${{env.VERSION}}
+      run: |
+        sudo -E ./build.sh
+
+    - name: Release
+      if: ${{ github.event_name == 'release' }}
+      uses: softprops/action-gh-release@v0.1.5
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        files: |
+          hio-raspbian-bullseye-desktop-grafana-influxdb-${{env.VERSION}}.zip
+          hio-raspbian-bullseye-desktop-${{env.VERSION}}.zip
+
+
+
+
