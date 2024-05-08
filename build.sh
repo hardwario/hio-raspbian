@@ -5,11 +5,10 @@ set -eu
 . ./utils.sh
 
 
-
 if [[ ! -v URL ]]; then
-URL="https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2022-09-26/2022-09-22-raspios-bullseye-armhf-lite.img.xz"
-SHA256="9bf5234efbadd2d39769486e0a20923d8526a45eba57f74cda45ef78e2b628da"
-NAME="hio-raspbian-bullseye-lite"
+URL="https://downloads.raspberrypi.com/raspios_lite_armhf/images/raspios_lite_armhf-2024-03-15/2024-03-15-raspios-bookworm-armhf-lite.img.xz"
+SHA256="4fa99737265ac338a9ed0643f502246b97b928e5dfffa92939242e26e290638d"
+NAME="hio-raspbian-bookworm-lite"
 fi
 
 IMAGE=${URL##*/}

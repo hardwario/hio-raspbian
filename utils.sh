@@ -91,16 +91,36 @@ img_mount() {
 }
 
 img_umount() {
+	kpart_output=$(kpartx -v -a -s "$1")
+	loop_root=/dev/mapper/$(echo "$kpart_output" | awk 'NR==2{print $3}')
+
 	umount -l "${ROOT_DIR}/boot"
+
+	while is_mounted "${ROOT_DIR}/boot"; do
+		sleep 1
+	done
+
 	umount -l "${ROOT_DIR}"
 
-	sleep 5m
+	while is_mounted "${ROOT_DIR}"; do
+		sleep 1
+	done
+
+	rmdir "${ROOT_DIR}"
 
 	kpartx -d -v "${IMAGE}"
 
-	sleep 5m
+	while check_loops "${IMAGE}"; do
+		sleep 1
+	done
+}
 
-	rmdir "${ROOT_DIR}"
+is_mounted() {
+    mount | awk -v DIR="$1" '{if ($3 == DIR) { exit 0}} ENDFILE{exit -1}'
+}
+
+check_loops() {
+  losetup -l | grep -q "$(basename "$1")"
 }
 
 chroot_enable() {
