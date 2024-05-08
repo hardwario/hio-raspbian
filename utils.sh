@@ -76,25 +76,29 @@ img_resize() {
 img_mount() {
 	# usage: mount_img img_path
 
+	if is_mounted "${ROOT_DIR}/boot"; then
+		img_umount "$1"
+	fi
+
 	kpart_output=$(kpartx -v -a -s "$1")
 
 	loop_boot=/dev/mapper/$(echo "$kpart_output" | awk 'NR==1{print $3}')
 	loop_root=/dev/mapper/$(echo "$kpart_output" | awk 'NR==2{print $3}')
 
-	echo "loop_boot ${loop_boot}"
-	echo "loop_root ${loop_root}"
+	while ! check_loops "${IMAGE}"; do
+		echo "Waiting for loop devices"
+		sleep 1
+	done
 
 	mkdir -p "$ROOT_DIR"
 
 	mount -o rw "${loop_root}" "${ROOT_DIR}"
 	mount -o rw "${loop_boot}" "${ROOT_DIR}/boot"
 
-	if is_mounted "${ROOT_DIR}/boot"; then
-		echo "Mounted"
-	else
-		ewarn "Wait for mount"
+	while ! is_mounted "${ROOT_DIR}/boot"; do
+		echo "Waiting for mount"
 		sleep 1
-	fi
+	done
 }
 
 img_umount() {
@@ -149,11 +153,6 @@ chroot_enable() {
 	echo "Disable IPv6 in APT"
 	echo 'Acquire::ForceIPv4 "true";' >> "$ROOT_DIR/etc/apt/apt.conf.d/99force-ipv4"
 	echo "Modify source.list"
-
-	echo "Check user in chroot"
-	grep ':1000:' "${ROOT_DIR}/etc/passwd"
-	echo "Check user in host"
-	grep ':1000:' "/etc/passwd"
 }
 
 chroot_disable() {
@@ -167,18 +166,9 @@ chroot_disable() {
 	rm -f "${ROOT_DIR}/usr/bin/ischroot"
 
 	sed -i 's/^#CHROOT //g' "${ROOT_DIR}/etc/ld.so.preload"
-
-	# # uncoment for use command chroot
-	# umount "${ROOT_DIR}/etc/resolv.conf"
-	# umount "${ROOT_DIR}/proc"
-	# umount "${ROOT_DIR}/sys"
-	# umount "${ROOT_DIR}/dev/pts"
-	# umount "${ROOT_DIR}/dev"
 }
 
 chroot_bash() {
-	# HOME=/home/pi LC_ALL='C.UTF-8' chroot --userspec=1000:1000 ${ROOT_DIR} /bin/bash
-	# HOME=/home/pi LC_ALL='C.UTF-8' setarch linux32 chroot --userspec=1000:1000 ${ROOT_DIR} /bin/bash
 	systemd-nspawn -D "${ROOT_DIR}" -E HOME=/home/pi -E LC_ALL='C.UTF-8' --pipe -u 1000 bin/bash
 }
 
