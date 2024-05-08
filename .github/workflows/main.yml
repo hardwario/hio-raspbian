@@ -10,7 +10,7 @@ env:
 
 jobs:
   build-lite:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
 
@@ -21,6 +21,12 @@ jobs:
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
         packages: kpartx coreutils qemu-user-static zip unzip binfmt-support openssl systemd-container parted xz-utils binfmt-support qemu-user-static
+
+    - name: Create user with specific UID
+      run: |
+        sudo useradd -m -s /bin/bash -u 1000 pi
+        sudo passwd -d pi
+        echo "User 'pi' with UID 1000 created."
 
     - name: Build Raspbian Lite
       env:
@@ -42,7 +48,7 @@ jobs:
           hio-raspbian-bookworm-lite-grafana-influxdb-${{env.VERSION}}.zip
 
   build-desktop:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
 
