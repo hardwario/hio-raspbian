@@ -24,9 +24,9 @@ jobs:
 
     - name: Build Raspbian Lite
       env:
-        NAME: hio-raspbian-bullseye-lite
-        URL: https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2022-09-26/2022-09-22-raspios-bullseye-armhf-lite.img.xz
-        SHA256: 9bf5234efbadd2d39769486e0a20923d8526a45eba57f74cda45ef78e2b628da
+        NAME: hio-raspbian-bookworm-lite
+        URL: https://downloads.raspberrypi.com/raspios_lite_armhf/images/raspios_lite_armhf-2024-03-15/2024-03-15-raspios-bookworm-armhf-lite.img.xz
+        SHA256: 4fa99737265ac338a9ed0643f502246b97b928e5dfffa92939242e26e290638d
         VERSION: ${{env.VERSION}}
       run: |
         sudo -E ./build.sh
@@ -38,8 +38,8 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       with:
         files: |
-          hio-raspbian-bullseye-lite-${{env.VERSION}}.zip
-          hio-raspbian-bullseye-lite-grafana-influxdb-${{env.VERSION}}.zip
+          hio-raspbian-bookworm-lite-${{env.VERSION}}.zip
+          hio-raspbian-bookworm-lite-grafana-influxdb-${{env.VERSION}}.zip
 
   build-desktop:
     runs-on: ubuntu-20.04
@@ -56,9 +56,9 @@ jobs:
 
     - name: Build Raspbian Desktop
       env:
-        NAME: hio-raspbian-bullseye-desktop
-        URL: https://downloads.raspberrypi.org/raspios_armhf/images/raspios_armhf-2022-09-26/2022-09-22-raspios-bullseye-armhf.img.xz
-        SHA256: 4d8f38d014a807198996693b90cbeef94e19d9fd7fbefba7068db8df4d698cdd
+        NAME: hio-raspbian-bookworm-desktop
+        URL: https://downloads.raspberrypi.com/raspios_armhf/images/raspios_armhf-2024-03-15/2024-03-15-raspios-bookworm-armhf.img.xz
+        SHA256: 52a807d37a894dfcb09274382762f8274c7044ce3d98040aba474e0af93b85ab
         VERSION: ${{env.VERSION}}
       run: |
         sudo -E ./build.sh
@@ -70,8 +70,8 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       with:
         files: |
-          hio-raspbian-bullseye-desktop-grafana-influxdb-${{env.VERSION}}.zip
-          hio-raspbian-bullseye-desktop-${{env.VERSION}}.zip
+          hio-raspbian-bookworm-desktop-grafana-influxdb-${{env.VERSION}}.zip
+          hio-raspbian-bookworm-desktop-${{env.VERSION}}.zip
 
 
 
