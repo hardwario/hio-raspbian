@@ -18,14 +18,11 @@ sudo apt update
 step 'Install dependencies'
 sudo apt install apt-transport-https curl adduser libfontconfig python3-pip -y
 
-step 'Add InfluxDB repository key'
-curl -sL https://repos.influxdata.com/influxdb.key | sudo apt-key add -
-
-step 'Add InfluxDB repository to source list'
-echo "deb https://repos.influxdata.com/debian stretch stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
-
-step 'Install InfluxDB packages'
-sudo apt update && sudo apt install influxdb
+step 'Install InfluxDB 1.X'
+wget -q https://repos.influxdata.com/influxdata-archive_compat.key
+echo '393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c influxdata-archive_compat.key' | sha256sum -c && cat influxdata-archive_compat.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
+echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' | sudo tee /etc/apt/sources.list.d/influxdata.list
+sudo apt update && sudo apt install -y influxdb
 
 if command -v pm2 >/dev/null 2>&1; then
 step 'Start InfluxDB service: pm2'
