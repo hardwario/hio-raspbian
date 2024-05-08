@@ -88,6 +88,13 @@ img_mount() {
 
 	mount -o rw "${loop_root}" "${ROOT_DIR}"
 	mount -o rw "${loop_boot}" "${ROOT_DIR}/boot"
+
+	if is_mounted "${ROOT_DIR}/boot"; then
+		echo "Mounted"
+	else
+		ewarn "Wait for mount"
+		sleep 1
+	fi
 }
 
 img_umount() {
@@ -113,6 +120,8 @@ img_umount() {
 	while check_loops "${IMAGE}"; do
 		sleep 1
 	done
+
+	echo "Unmounted"
 }
 
 is_mounted() {
@@ -140,6 +149,11 @@ chroot_enable() {
 	echo "Disable IPv6 in APT"
 	echo 'Acquire::ForceIPv4 "true";' >> "$ROOT_DIR/etc/apt/apt.conf.d/99force-ipv4"
 	echo "Modify source.list"
+
+	echo "Check user in chroot"
+	grep ':1000:' "${ROOT_DIR}/etc/passwd"
+	echo "Check user in host"
+	grep ':1000:' "/etc/passwd"
 }
 
 chroot_disable() {

@@ -22,12 +22,6 @@ jobs:
       with:
         packages: kpartx coreutils qemu-user-static zip unzip binfmt-support openssl systemd-container parted xz-utils binfmt-support qemu-user-static
 
-    - name: Create user with specific UID
-      run: |
-        sudo useradd -m -s /bin/bash -u 1000 pi
-        sudo passwd -d pi
-        echo "User 'pi' with UID 1000 created."
-
     - name: Build Raspbian Lite
       env:
         NAME: hio-raspbian-bookworm-lite
