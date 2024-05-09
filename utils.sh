@@ -213,7 +213,11 @@ img_shrink() {
 	fi
 
 	losetup -d "$loopback"
-	sleep 5m
+
+	while ! check_loops "${IMAGE}"; do
+		echo "Waiting for loop devices"
+		sleep 1
+	done
 
 	#Shrink partition
 	partnewsize=$(($minsize * $blocksize))
